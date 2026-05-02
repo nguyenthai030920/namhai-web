@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nam Hai Technology – Giải pháp vận hành thông minh cho mọi lĩnh vực</title>
+<meta name="description" content="Nam Hai Technology – Giải pháp IoT giám sát, cảnh báo và tự động hóa cho nhà máy, F&B, kho bãi, cửa hàng và nông nghiệp tại Việt Nam.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════
+   ROOT VARIABLES
+══════════════════════════════════ */
+:root {
+  --navy:    #0C2554;
+  --blue:    #1565C0;
+  --cyan:    #0EA5E9;
+  --light:   #D6EAF8;
+  --white:   #FFFFFF;
+  --off:     #F0F4F8;
+  --text:    #1A2332;
+  --muted:   #6B7A8D;
+  --border:  #D1DCE8;
+  --grad:    linear-gradient(135deg, #0C2554 0%, #1565C0 60%, #0EA5E9 100%);
+  --grad2:   linear-gradient(135deg, #1565C0, #0EA5E9);
+  --font-h:  'Barlow Condensed', sans-serif;
+  --font-b:  'DM Sans', sans-serif;
+  --font-m:  'JetBrains Mono', monospace;
+  --shadow:  0 4px 24px rgba(12,37,84,0.12);
+  --shadow-l:0 2px 8px rgba(12,37,84,0.08);
+}
+
+/* ══════════════════════════════════
+   RESET & BASE
+══════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-b);
+  color: var(--text);
+  background: var(--white);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ══════════════════════════════════
+   SCROLLBAR
+══════════════════════════════════ */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--off); }
+::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+/* ══════════════════════════════════
+   NAVBAR
+══════════════════════════════════ */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 0 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+  background: rgba(12,37,84,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.3s;
+}
+#navbar.scrolled {
+  height: 58px;
+  background: rgba(12,37,84,0.99);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+}
+.nav-logo-mark {
+  width: 36px; height: 36px; position: relative; flex-shrink: 0;
+}
+.nav-logo-mark svg { width: 100%; height: 100%; }
+.nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
+.nav-logo-text .brand { font-family: var(--font-h); font-size: 18px; font-weight: 800; color: var(--white); letter-spacing: 1.5px; }
+.nav-logo-text .sub   { font-size: 9px; color: rgba(255,255,255,0.5); letter-spacing: 2px; font-family: var(--font-m); text-transform: uppercase; }
+.nav-links {
+  display: flex; gap: 8px; align-items: center;
+}
+.nav-links a {
+  font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.7);
+  padding: 6px 14px; border-radius: 4px;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+.nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.08); }
+.nav-cta {
+  background: var(--cyan) !important;
+  color: var(--navy) !important;
+  font-weight: 700 !important;
+  padding: 8px 20px !important;
+  border-radius: 4px;
+}
+.nav-cta:hover { background: #38BDF8 !important; transform: translateY(-1px); }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+.nav-toggle span { display: block; width: 22px; height: 2px; background: white; margin: 4px 0; border-radius: 2px; transition: all 0.3s; }
+
+/* ══════════════════════════════════
+   HERO
+══════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  background: var(--navy);
+  position: relative;
+  display: flex; align-items: center;
+  overflow: hidden;
+  padding: 0 5%;
+  padding-top: 68px;
+}
+
+/* Circuit grid background */
+#hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(14,165,233,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14,165,233,0.06) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridShift 20s linear infinite;
+}
+@keyframes gridShift {
+  0%   { background-position: 0 0; }
+  100% { background-position: 50px 50px; }
+}
+
+/* Glow orbs */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.18;
+  animation: pulse 6s ease-in-out infinite alternate;
+}
+.hero-orb-1 { width: 500px; height: 500px; background: var(--blue); top: -100px; right: -100px; animation-delay: 0s; }
+.hero-orb-2 { width: 300px; height: 300px; background: var(--cyan); bottom: 0; left: 20%; animation-delay: 2s; }
+@keyframes pulse { from { opacity: 0.12; transform: scale(1); } to { opacity: 0.22; transform: scale(1.1); } }
+
+.hero-content {
+  position: relative; z-index: 2;
+  max-width: 760px;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(14,165,233,0.12);
+  border: 1px solid rgba(14,165,233,0.3);
+  color: var(--cyan);
+  font-size: 11px; font-family: var(--font-m);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 2px;
+  margin-bottom: 28px;
+  animation: fadeUp 0.6s 0.2s both;
+}
+.hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.hero-h1 {
+  font-family: var(--font-h);
+  font-size: clamp(38px, 5.5vw, 68px);
+  font-weight: 800;
+  line-height: 1.05;
+  color: var(--white);
+  letter-spacing: -0.5px;
+  margin-bottom: 24px;
+  animation: fadeUp 0.6s 0.3s both;
+}
+.hero-h1 .accent { color: var(--cyan); }
+.hero-h1 .line2 { display: block; }
+
+.hero-sub {
+  font-size: 17px; color: rgba(255,255,255,0.65);
+  max-width: 520px; line-height: 1.7;
+  margin-bottom: 40px;
+  animation: fadeUp 0.6s 0.4s both;
+}
+
+.hero-btns {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  animation: fadeUp 0.6s 0.5s both;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--cyan);
+  color: var(--navy);
+  font-weight: 700; font-size: 14px;
+  padding: 14px 28px; border-radius: 4px;
+  transition: all 0.25s;
+  letter-spacing: 0.3px;
+}
+.btn-primary:hover { background: #38BDF8; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(14,165,233,0.35); }
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.85);
+  font-weight: 500; font-size: 14px;
+  padding: 14px 28px; border-radius: 4px;
+  transition: all 0.25s;
+}
+.btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+
+.hero-stats {
+  display: flex; gap: 40px; margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  animation: fadeUp 0.6s 0.6s both;
+}
+.stat-item { text-align: left; }
+.stat-num {
+  font-family: var(--font-h);
+  font-size: 36px; font-weight: 800;
+  color: var(--white); line-height: 1;
+}
+.stat-num span { color: var(--cyan); }
+.stat-label { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px; letter-spacing: 0.5px; }
+
+/* Hero right visual */
+.hero-visual {
+  position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+  width: 420px; z-index: 2;
+  animation: fadeUp 0.8s 0.5s both;
+  display: none;
+}
+@media (min-width: 1100px) { .hero-visual { display: block; } }
+
+.device-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+}
+.device-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.device-title { font-family: var(--font-m); font-size: 11px; color: var(--cyan); letter-spacing: 1px; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #22C55E; box-shadow: 0 0 8px #22C55E; animation: blink 2s infinite; }
+.sensor-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;
+}
+.sensor-box {
+  background: rgba(14,165,233,0.08);
+  border: 1px solid rgba(14,165,233,0.2);
+  border-radius: 8px;
+  padding: 14px;
+}
+.sensor-label { font-size: 10px; color: rgba(255,255,255,0.4); font-family: var(--font-m); letter-spacing: 0.5px; margin-bottom: 6px; }
+.sensor-val { font-family: var(--font-m); font-size: 22px; font-weight: 500; color: var(--white); }
+.sensor-val span { font-size: 11px; color: rgba(255,255,255,0.4); }
+.sensor-ok { color: #22C55E; }
+.alert-row {
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.25);
+  border-radius: 6px; padding: 10px 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.alert-icon { font-size: 14px; }
+.alert-text { font-family: var(--font-m); font-size: 10px; color: rgba(255,255,255,0.7); }
+.alert-time { font-size: 9px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+
+/* Mini bar chart */
+.mini-chart { margin-top: 14px; }
+.chart-label { font-family: var(--font-m); font-size: 9px; color: rgba(255,255,255,0.35); margin-bottom: 8px; letter-spacing: 0.8px; }
+.bars { display: flex; align-items: flex-end; gap: 4px; height: 50px; }
+.bar { flex: 1; border-radius: 2px 2px 0 0; background: var(--grad2); opacity: 0.6; transition: opacity 0.3s; }
+.bar:hover { opacity: 1; }
+
+@keyframes fadeUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform: translateY(0); } }
+
+/* ══════════════════════════════════
+   SECTION BASE
+══════════════════════════════════ */
+section { padding: 90px 5%; }
+.section-tag {
+  font-family: var(--font-m);
+  font-size: 11px; font-weight: 500;
+  color: var(--blue);
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-tag::before { content: ''; width: 24px; height: 2px; background: var(--blue); }
+.section-h2 {
+  font-family: var(--font-h);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+.section-sub {
+  font-size: 16px; color: var(--muted);
+  max-width: 540px; line-height: 1.7;
+  margin-top: 14px;
+}
+.text-center { text-align: center; }
+.text-center .section-tag { justify-content: center; }
+.text-center .section-tag::before { display: none; }
+.text-center .section-sub { margin: 14px auto 0; }
+
+/* ══════════════════════════════════
+   SERVICES
+══════════════════════════════════ */
+#services { background: var(--off); }
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 52px;
+}
+.service-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 32px 28px;
+  position: relative; overflow: hidden;
+  transition: all 0.3s;
+  cursor: default;
+}
+.service-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: var(--grad2);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s;
+}
+.service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: transparent; }
+.service-card:hover::after { transform: scaleX(1); }
+.service-icon { display: none; }
+.service-card h3 {
+  font-family: var(--font-h);
+  font-size: 24px; font-weight: 700;
+  color: var(--navy); margin-bottom: 10px;
+}
+.service-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+.service-tags {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px;
+}
+.tag {
+  font-size: 11px; font-family: var(--font-m);
+  color: var(--blue);
+  background: var(--light);
+  padding: 3px 10px; border-radius: 2px;
+  letter-spacing: 0.3px;
+}
+
+/* ══════════════════════════════════
+   ABOUT
+══════════════════════════════════ */
+#about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+@media (max-width: 900px) { #about { grid-template-columns: 1fr; gap: 40px; } }
+.about-visual {
+  position: relative;
+}
+.about-img-wrap {
+  background: var(--grad);
+  border-radius: 12px;
+  padding: 3px;
+  box-shadow: var(--shadow);
+}
+.about-img-inner {
+  background: #0a1f45;
+  border-radius: 10px;
+  padding: 32px;
+  overflow: hidden;
+  position: relative;
+}
+.about-img-inner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(14,165,233,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14,165,233,0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+.about-metrics {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; position: relative; z-index: 1;
+}
+.metric-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px; padding: 20px;
+  text-align: center;
+}
+.metric-num {
+  font-family: var(--font-h); font-size: 38px; font-weight: 800;
+  background: var(--grad2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+.metric-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 6px; font-family: var(--font-m); letter-spacing: 0.5px; }
+
+.about-badge-bottom {
+  position: absolute; bottom: -20px; right: 20px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 18px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: var(--shadow);
+}
+.about-badge-bottom .icon { font-size: 22px; }
+.about-badge-bottom .txt { font-size: 12px; font-weight: 600; color: var(--navy); }
+.about-badge-bottom .sub2 { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+.about-content {}
+.about-content .section-tag { margin-bottom: 10px; }
+.about-content p { font-size: 15px; color: var(--muted); line-height: 1.8; margin-top: 18px; }
+.about-features { margin-top: 28px; display: flex; flex-direction: column; gap: 14px; }
+.feat-row {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 14px 18px;
+  background: var(--off);
+  border-radius: 8px;
+  border-left: 3px solid var(--blue);
+}
+.feat-row .ficon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.feat-row h4 { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 2px; }
+.feat-row p { font-size: 13px; color: var(--muted); }
+
+/* ══════════════════════════════════
+   IOT PRODUCT (H1)
+══════════════════════════════════ */
+#product { background: var(--navy); position: relative; overflow: hidden; }
+#product::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(14,165,233,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14,165,233,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.product-inner { position: relative; z-index: 1; }
+.product-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+  align-items: center; margin-top: 52px;
+}
+@media (max-width: 900px) { .product-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+.product-features { display: flex; flex-direction: column; gap: 18px; margin-top: 28px; }
+.pf-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 18px 20px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  transition: all 0.25s;
+}
+.pf-item:hover { background: rgba(255,255,255,0.07); border-color: rgba(14,165,233,0.3); }
+.pf-icon { font-size: 20px; flex-shrink: 0; }
+.pf-text h4 { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+.pf-text p  { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+/* Product demo card */
+.product-demo {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px; padding: 28px;
+  backdrop-filter: blur(8px);
+}
+.demo-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 22px;
+}
+.demo-title { font-family: var(--font-m); font-size: 12px; color: var(--cyan); letter-spacing: 0.8px; }
+.demo-badge {
+  background: rgba(34,197,94,0.15);
+  border: 1px solid rgba(34,197,94,0.3);
+  color: #22C55E;
+  font-family: var(--font-m); font-size: 10px;
+  padding: 3px 10px; border-radius: 20px;
+  display: flex; align-items: center; gap: 5px;
+}
+.demo-badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #22C55E; animation: blink 1.5s infinite; }
+
+.machines-list { display: flex; flex-direction: column; gap: 10px; }
+.machine-item {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px; padding: 14px 16px;
+  transition: all 0.2s;
+}
+.machine-item:hover { background: rgba(255,255,255,0.06); }
+.machine-status { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.status-on  { background: #22C55E; box-shadow: 0 0 8px #22C55E; animation: blink 2s infinite; }
+.status-off { background: #EF4444; box-shadow: 0 0 8px #EF4444; }
+.status-idle{ background: #F59E0B; }
+.machine-name { flex: 1; font-size: 13px; font-weight: 500; color: var(--white); }
+.machine-info { text-align: right; }
+.machine-amps { font-family: var(--font-m); font-size: 12px; color: rgba(255,255,255,0.6); }
+.machine-state { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+
+.demo-alert {
+  margin-top: 14px;
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.3);
+  border-radius: 8px; padding: 12px 16px;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.demo-alert-icon { font-size: 16px; flex-shrink: 0; }
+.demo-alert-body { flex: 1; }
+.demo-alert-title { font-size: 12px; font-weight: 600; color: #FCA5A5; }
+.demo-alert-sub { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; font-family: var(--font-m); }
+.demo-alert-time { font-size: 10px; color: rgba(255,255,255,0.25); margin-top: 4px; }
+
+/* Product text */
+.product-text .section-h2 { color: var(--white); }
+.product-text .section-sub { color: rgba(255,255,255,0.55); }
+.product-text .section-tag { color: var(--cyan); }
+.product-text .section-tag::before { background: var(--cyan); }
+.product-cta {
+  margin-top: 32px;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--cyan);
+  color: var(--navy);
+  font-weight: 700; font-size: 14px;
+  padding: 13px 26px; border-radius: 4px;
+  transition: all 0.25s;
+}
+.product-cta:hover { background: #38BDF8; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(14,165,233,0.3); }
+
+/* ══════════════════════════════════
+   PROJECTS (CASE STUDIES)
+══════════════════════════════════ */
+#projects { background: var(--off); }
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 52px;
+}
+.project-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.project-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.project-img {
+  height: 160px;
+  background: var(--grad);
+  position: relative;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.project-img::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 25px 25px;
+}
+.project-img-icon { font-size: 48px; position: relative; z-index: 1; }
+.project-body { padding: 24px; }
+.project-category {
+  font-family: var(--font-m); font-size: 10px;
+  color: var(--blue); letter-spacing: 1.5px; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.project-body h3 { font-family: var(--font-h); font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.project-body p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.project-results {
+  margin-top: 16px; display: flex; gap: 16px; flex-wrap: wrap;
+}
+.result-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--muted);
+}
+.result-item::before { content: '✓'; color: #22C55E; font-weight: 700; }
+
+/* ══════════════════════════════════
+   PROCESS
+══════════════════════════════════ */
+#process { background: var(--white); }
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0;
+  margin-top: 52px;
+  position: relative;
+}
+.process-steps::before {
+  content: '';
+  position: absolute;
+  top: 32px; left: 15%; right: 15%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--light), var(--blue), var(--light));
+}
+@media (max-width: 700px) { .process-steps::before { display: none; } }
+.step-item {
+  text-align: center; padding: 0 16px;
+  position: relative;
+}
+.step-num {
+  width: 64px; height: 64px;
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 18px;
+  font-family: var(--font-h); font-size: 22px; font-weight: 800;
+  color: var(--navy);
+  position: relative; z-index: 1;
+  transition: all 0.3s;
+}
+.step-item:hover .step-num {
+  background: var(--blue); color: var(--white); border-color: var(--blue);
+  box-shadow: 0 0 0 6px rgba(21,101,192,0.12);
+}
+.step-item h4 { font-family: var(--font-h); font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.step-item p  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ══════════════════════════════════
+   CONTACT
+══════════════════════════════════ */
+#contact {
+  background: var(--navy);
+  position: relative; overflow: hidden;
+}
+#contact::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 60% at 80% 50%, rgba(14,165,233,0.08), transparent);
+}
+.contact-inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr 1.3fr;
+  gap: 64px; align-items: start;
+}
+@media (max-width: 900px) { .contact-inner { grid-template-columns: 1fr; gap: 40px; } }
+
+.contact-info .section-h2 { color: var(--white); }
+.contact-info .section-sub { color: rgba(255,255,255,0.55); }
+.contact-info .section-tag { color: var(--cyan); }
+.contact-info .section-tag::before { background: var(--cyan); }
+
+.contact-items { margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
+.contact-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+}
+.contact-item .cicon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.contact-item h4 { font-size: 12px; color: rgba(255,255,255,0.4); font-family: var(--font-m); letter-spacing: 0.5px; margin-bottom: 4px; }
+.contact-item p  { font-size: 14px; color: rgba(255,255,255,0.8); }
+
+/* Form */
+.contact-form {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 36px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.form-title { font-family: var(--font-h); font-size: 24px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+.form-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-group label {
+  font-size: 12px; font-weight: 600; color: var(--navy);
+  letter-spacing: 0.3px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 11px 14px;
+  font-family: var(--font-b);
+  font-size: 14px; color: var(--text);
+  background: var(--white);
+  transition: all 0.2s;
+  outline: none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(21,101,192,0.1);
+}
+.form-group textarea { resize: vertical; min-height: 100px; }
+.form-submit {
+  width: 100%; margin-top: 8px;
+  background: var(--blue);
+  color: var(--white);
+  font-family: var(--font-b); font-weight: 700; font-size: 15px;
+  border: none; border-radius: 6px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.form-submit:hover { background: var(--navy); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(21,101,192,0.3); }
+.form-note { font-size: 11px; color: var(--muted); text-align: center; margin-top: 12px; }
+.success-msg {
+  display: none;
+  background: rgba(34,197,94,0.1);
+  border: 1px solid rgba(34,197,94,0.3);
+  color: #15803D;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 13px; text-align: center;
+  margin-top: 12px;
+}
+
+/* ══════════════════════════════════
+   FOOTER
+══════════════════════════════════ */
+footer {
+  background: #060F1F;
+  padding: 48px 5% 28px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer-top {
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 40px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+@media (max-width: 700px) { .footer-top { grid-template-columns: 1fr; gap: 28px; } }
+.footer-brand p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; margin-top: 14px; max-width: 280px; }
+.footer-col h4 { font-family: var(--font-m); font-size: 11px; color: var(--cyan); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
+.footer-col ul { display: flex; flex-direction: column; gap: 8px; }
+.footer-col ul li a { font-size: 13px; color: rgba(255,255,255,0.5); transition: color 0.2s; }
+.footer-col ul li a:hover { color: var(--white); }
+.footer-bottom {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 24px; flex-wrap: wrap; gap: 12px;
+}
+.footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.3); }
+.footer-socials { display: flex; gap: 8px; }
+.footer-socials a {
+  width: 32px; height: 32px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: rgba(255,255,255,0.4);
+  transition: all 0.2s;
+}
+.footer-socials a:hover { border-color: var(--cyan); color: var(--cyan); }
+
+/* Footer logo */
+.footer-logo { display: flex; align-items: center; gap: 10px; }
+.footer-logo .brand { font-family: var(--font-h); font-size: 18px; font-weight: 800; color: var(--white); letter-spacing: 1.5px; }
+.footer-logo .sub { font-size: 9px; color: rgba(255,255,255,0.35); letter-spacing: 2px; font-family: var(--font-m); display: block; margin-top: 2px; }
+
+/* ══════════════════════════════════
+   MOBILE
+══════════════════════════════════ */
+@media (max-width: 768px) {
+  section { padding: 64px 5%; }
+  .nav-links { display: none; flex-direction: column; position: fixed; top: 68px; left: 0; right: 0; background: rgba(12,37,84,0.98); padding: 20px; gap: 4px; }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 12px 16px; }
+  .nav-toggle { display: block; }
+  .hero-stats { gap: 24px; flex-wrap: wrap; }
+  .hero-btns { flex-direction: column; }
+  .hero-btns a { text-align: center; justify-content: center; }
+  #about { padding: 64px 5%; }
+  .about-badge-bottom { display: none; }
+}
+
+/* ══════════════════════════════════
+   ANIMATIONS ON SCROLL
+══════════════════════════════════ */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     NAVBAR
+══════════════════════════════════ -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 36 36" fill="none">
+        <polygon points="2,2 12,2 12,34 2,34" fill="url(#ng)"/>
+        <polygon points="12,2 22,2 30,34 20,34" fill="url(#ng)"/>
+        <polygon points="24,2 34,2 34,34 24,34" fill="url(#ng)"/>
+        <polygon points="14,2 18,2 26,34 22,34" fill="white" opacity="0.22"/>
+        <defs>
+          <linearGradient id="ng" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#42A5F5"/>
+            <stop offset="100%" stop-color="#1565C0"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <div class="nav-logo-text">
+      <span class="brand">NAM HAI</span>
+      <span class="sub">TECHNOLOGY</span>
+    </div>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="#services">Dịch vụ</a>
+    <a href="#product">Sản phẩm</a>
+    <a href="#agri">Nông nghiệp số</a>
+    <a href="#about">Về chúng tôi</a>
+    <a href="#contact" class="nav-cta">Tư vấn miễn phí</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ══════════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">IoT · Tự động hóa · Giám sát thông minh</div>
+    <h1 class="hero-h1">
+      GIẢI PHÁP<br>
+      <span class="accent">VẬN HÀNH THÔNG MINH</span>
+      <span class="line2">CHO MỌI LĨNH VỰC</span>
+    </h1>
+    <p class="hero-sub">
+      Nam Hai Technology triển khai giải pháp IoT giám sát, cảnh báo và tự động hóa — giúp nhà hàng, kho bãi, xưởng sản xuất và cửa hàng vận hành an toàn, tiết kiệm chi phí và không bao giờ bị bất ngờ.
+    </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">📋 Nhận tư vấn miễn phí</a>
+      <a href="#services" class="btn-outline">🔍 Khám phá giải pháp</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">50<span>+</span></div>
+        <div class="stat-label">Khách hàng tin dùng</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">200<span>+</span></div>
+        <div class="stat-label">Thiết bị đã triển khai</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">98<span>%</span></div>
+        <div class="stat-label">Tỷ lệ hài lòng</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating badge cluster instead of dashboard -->
+  <div class="hero-visual">
+    <div style="display:flex; flex-direction:column; gap:14px;">
+      <div style="background:rgba(255,255,255,0.06); border:1px solid rgba(14,165,233,0.25); border-radius:12px; padding:20px 24px; display:flex; align-items:center; gap:16px;">
+        <div style="width:44px;height:44px;border-radius:10px;background:rgba(14,165,233,0.15);display:flex;align-items:center;justify-content:center; flex-shrink:0;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0EA5E9" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div>
+          <div style="font-family:var(--font-m);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;margin-bottom:4px;">TRẠNG THÁI HỆ THỐNG</div>
+          <div style="font-size:14px;font-weight:600;color:var(--white);">Tất cả thiết bị hoạt động bình thường</div>
+        </div>
+        <span style="width:8px;height:8px;border-radius:50%;background:#22C55E;box-shadow:0 0 8px #22C55E;flex-shrink:0;animation:blink 2s infinite;"></span>
+      </div>
+      <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.25); border-radius:12px; padding:18px 24px; display:flex; align-items:center; gap:16px;">
+        <div style="width:44px;height:44px;border-radius:10px;background:rgba(239,68,68,0.12);display:flex;align-items:center;justify-content:center; flex-shrink:0;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </div>
+        <div>
+          <div style="font-family:var(--font-m);font-size:10px;color:rgba(255,255,255,0.4);letter-spacing:1px;margin-bottom:4px;">CẢNH BÁO · 14:32</div>
+          <div style="font-size:13px;font-weight:600;color:#FCA5A5;">Máy CNC #3 dừng bất thường</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">Telegram đã thông báo Mr. Thái</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:18px;text-align:center;">
+          <div style="font-family:var(--font-h);font-size:30px;font-weight:800;background:var(--grad2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">97.2<span style="-webkit-text-fill-color:rgba(255,255,255,0.4);font-size:14px;">%</span></div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:4px;font-family:var(--font-m);">UPTIME</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:18px;text-align:center;">
+          <div style="font-family:var(--font-h);font-size:30px;font-weight:800;background:var(--grad2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">4<span style="-webkit-text-fill-color:rgba(255,255,255,0.4);font-size:14px;">/5</span></div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:4px;font-family:var(--font-m);">MÁY ĐANG CHẠY</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SERVICES
+══════════════════════════════════ -->
+<section id="services">
+  <div class="text-center reveal">
+    <div class="section-tag">Giải pháp vận hành</div>
+    <h2 class="section-h2"><span style="color:var(--blue);">Giám sát</span> <span style="color:var(--border); font-weight:300; font-size:0.7em; vertical-align:middle;">|</span> <span style="color:var(--blue);">Cảnh báo</span> <span style="color:var(--border); font-weight:300; font-size:0.7em; vertical-align:middle;">|</span> <span style="color:var(--blue);">Quản lý</span><br><span style="font-size:0.75em; font-weight:600; color:var(--muted); letter-spacing:2px; text-transform:uppercase;">Mọi lúc &mdash; Mọi nơi</span></h2>
+    <p class="section-sub">Dù bạn đang quản lý một nhà hàng, kho hàng, cửa hàng hay cơ sở sản xuất — Nam Hai Technology giúp bạn nắm toàn bộ hoạt động trong lòng bàn tay, tiết kiệm chi phí và loại bỏ rủi ro vận hành.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">🍽️</div>
+      <h3>F&B & Nhà hàng</h3>
+      <p>Giám sát nhiệt độ kho lạnh, tủ bảo quản thực phẩm và hệ thống điện 24/7. Nhận cảnh báo tức thì qua điện thoại khi có bất thường — không để hư hỏng hàng hóa vì phát hiện trễ.</p>
+      <div class="service-tags">
+        <span class="tag">Nhiệt độ kho lạnh</span>
+        <span class="tag">Cảm biến điện</span>
+        <span class="tag">Alert Telegram</span>
+      </div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">🏪</div>
+      <h3>Hộ kinh doanh & Cửa hàng</h3>
+      <p>Kiểm soát thiết bị điện, đèn chiếu sáng, máy điều hòa từ xa qua điện thoại. Tự động tắt thiết bị khi đóng cửa, cắt giảm chi phí điện năng và giảm rủi ro cháy nổ.</p>
+      <div class="service-tags">
+        <span class="tag">Điều khiển từ xa</span>
+        <span class="tag">Tiết kiệm điện</span>
+        <span class="tag">An toàn PCCC</span>
+      </div>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-icon">📦</div>
+      <h3>Kho bãi & Logistics</h3>
+      <p>Giám sát môi trường kho (nhiệt độ, độ ẩm), kiểm soát ra vào bằng thiết bị thông minh, cảnh báo xâm nhập ngoài giờ làm việc. Bảo vệ hàng hóa, giảm tổn thất không lường trước.</p>
+      <div class="service-tags">
+        <span class="tag">Môi trường kho</span>
+        <span class="tag">Kiểm soát ra vào</span>
+        <span class="tag">Chống đột nhập</span>
+      </div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">🏭</div>
+      <h3>Xưởng sản xuất & Nhà máy</h3>
+      <p>Hệ thống IoT H1 theo dõi trạng thái máy móc theo thời gian thực, phát cảnh báo ngay khi máy dừng bất thường — giúp quản đốc phản ứng trong dưới 5 phút thay vì 45 phút như trước.</p>
+      <div class="service-tags">
+        <span class="tag">Giám sát máy CNC</span>
+        <span class="tag">OEE & Uptime</span>
+        <span class="tag">PLC / VFD</span>
+      </div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">⚡</div>
+      <h3>Tiết kiệm năng lượng</h3>
+      <p>Phân tích mức tiêu thụ điện theo ca, theo thiết bị — phát hiện điểm lãng phí và đề xuất tối ưu cụ thể. Khách hàng trung bình tiết kiệm 15–20% chi phí điện sau 3 tháng triển khai.</p>
+      <div class="service-tags">
+        <span class="tag">Đo lường điện năng</span>
+        <span class="tag">Báo cáo chi phí</span>
+        <span class="tag">ROI rõ ràng</span>
+      </div>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-icon">🛠️</div>
+      <h3>Hỗ trợ kỹ thuật trọn gói</h3>
+      <p>Từ khảo sát, lắp đặt đến bảo trì định kỳ — đội kỹ thuật Nam Hai đồng hành xuyên suốt. Hỗ trợ on-site và remote, có mặt tại các tỉnh miền Bắc trong vòng 4 giờ kể từ khi yêu cầu.</p>
+      <div class="service-tags">
+        <span class="tag">On-site</span>
+        <span class="tag">Remote Support</span>
+        <span class="tag">Bảo hành 12 tháng</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     ABOUT
+══════════════════════════════════ -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-img-wrap">
+      <div class="about-img-inner">
+        <div class="about-metrics">
+          <div class="metric-box">
+            <div class="metric-num">2+</div>
+            <div class="metric-label">Năm kinh nghiệm</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-num">50+</div>
+            <div class="metric-label">Khách hàng tin tưởng</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-num">5+</div>
+            <div class="metric-label">Khu công nghiệp</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-num">24/7</div>
+            <div class="metric-label">Hỗ trợ kỹ thuật</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="about-badge-bottom">
+      <span class="icon">🏆</span>
+      <div>
+        <div class="txt">Đối tác tin cậy</div>
+        <div class="sub2">Ô tô · Điện tử · Cơ khí</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-content reveal">
+    <div class="section-tag">Về chúng tôi</div>
+    <h2 class="section-h2">Người đồng hành<br>của doanh nghiệp Việt</h2>
+    <p>Nam Hai Technology là công ty kỹ thuật chuyên về IoT, tự động hóa và thiết bị thông minh — phục vụ nhà máy, doanh nghiệp F&amp;B, kho bãi, cửa hàng và nông nghiệp trên địa bàn miền Bắc. Đội ngũ kỹ sư và kỹ thuật viên có kinh nghiệm thực tế tại nhiều cơ sở sản xuất và vận hành.</p>
+    <p>Chúng tôi hiểu rõ từng nỗi đau của người vận hành: máy dừng không rõ nguyên nhân, thiếu dữ liệu thời gian thực, chi phí sửa chữa cao. Đó là lý do Nam Hai ra đời.</p>
+    <div class="about-features">
+      <div class="feat-row">
+        <span class="ficon">🎯</span>
+        <div>
+          <h4>Tiếp cận thực tế, không lý thuyết</h4>
+          <p>Kỹ thuật viên trực tiếp làm việc tại xưởng, hiểu quy trình sản xuất từ bên trong.</p>
+        </div>
+      </div>
+      <div class="feat-row">
+        <span class="ficon">⚡</span>
+        <div>
+          <h4>Triển khai nhanh, không gián đoạn</h4>
+          <p>Lắp đặt trong 1–2 giờ, không dừng dây chuyền, chạy song song ngay từ ngày đầu.</p>
+        </div>
+      </div>
+      <div class="feat-row">
+        <span class="ficon">💰</span>
+        <div>
+          <h4>Chi phí hợp lý, ROI rõ ràng</h4>
+          <p>Giải pháp định giá theo quy mô nhà máy, cam kết thời gian hoàn vốn dưới 6 tháng.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     PRODUCTS
+══════════════════════════════════ -->
+<section id="product" style="background:var(--off); padding: 90px 5%;">
+
+  <div class="text-center reveal" style="margin-bottom:64px;">
+    <div class="section-tag" style="justify-content:center;">Danh mục sản phẩm</div>
+    <h2 class="section-h2">Thiết bị thông minh<br>cho mọi không gian</h2>
+    <p class="section-sub" style="margin:14px auto 0;">Hai dòng sản phẩm phục vụ hai nhu cầu khác nhau — từ nhà ở, văn phòng đến nhà xưởng và khu công nghiệp.</p>
+  </div>
+
+  <!-- CATEGORY A: IoT & Smart Home -->
+  <div style="margin-bottom:64px;">
+    <div style="display:flex; align-items:center; gap:16px; margin-bottom:32px;">
+      <div style="width:4px; height:40px; background:var(--grad2); border-radius:2px; flex-shrink:0;"></div>
+      <div>
+        <div style="font-family:var(--font-m); font-size:11px; color:var(--blue); letter-spacing:2px; text-transform:uppercase; margin-bottom:4px;">Nhóm A</div>
+        <h3 style="font-family:var(--font-h); font-size:clamp(22px,3vw,32px); font-weight:800; color:var(--navy); line-height:1.1;">Thiết bị IoT trong nhà &amp; Sản phẩm thông minh</h3>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap:20px;">
+
+      <!-- Product card 1 -->
+      <div style="background:var(--white); border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 28px rgba(12,37,84,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="height:180px; background:linear-gradient(135deg,#EBF5FB,#D6EAF8); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+          <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(21,101,192,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(21,101,192,0.06) 1px,transparent 1px);background-size:20px 20px;"></div>
+          <div style="position:relative;z-index:1;text-align:center;">
+            <div style="font-family:var(--font-m);font-size:10px;color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;">Tuya Smart</div>
+            <div style="font-family:var(--font-h);font-size:22px;font-weight:800;color:var(--navy);margin-top:6px;">Ổ cắm thông minh</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:4px;">Đo điện năng · Wi-Fi</div>
+          </div>
+        </div>
+        <div style="padding:20px 22px;">
+          <p style="font-size:13px;color:var(--muted);line-height:1.7;">Bật/tắt từ xa, lập lịch tự động, theo dõi tiêu thụ điện theo thời gian thực từ điện thoại.</p>
+          <a href="#contact" style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:12px;font-weight:700;color:var(--blue);font-family:var(--font-m);">Hỏi báo giá →</a>
+        </div>
+      </div>
+
+      <!-- Product card 2 -->
+      <div style="background:var(--white); border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 28px rgba(12,37,84,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="height:180px; background:linear-gradient(135deg,#EBF5FB,#D6EAF8); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+          <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(21,101,192,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(21,101,192,0.06) 1px,transparent 1px);background-size:20px 20px;"></div>
+          <div style="position:relative;z-index:1;text-align:center;">
+            <div style="font-family:var(--font-m);font-size:10px;color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;">Tuya Smart</div>
+            <div style="font-family:var(--font-h);font-size:22px;font-weight:800;color:var(--navy);margin-top:6px;">Công tắc thông minh</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:4px;">Wi-Fi · Google Home</div>
+          </div>
+        </div>
+        <div style="padding:20px 22px;">
+          <p style="font-size:13px;color:var(--muted);line-height:1.7;">Lắp đúng vị trí công tắc cũ, điều khiển đèn &amp; quạt bằng app hoặc giọng nói.</p>
+          <a href="#contact" style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:12px;font-weight:700;color:var(--blue);font-family:var(--font-m);">Hỏi báo giá →</a>
+        </div>
+      </div>
+
+      <!-- Product card 3 -->
+      <div style="background:var(--white); border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 28px rgba(12,37,84,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="height:180px; background:linear-gradient(135deg,#EBF5FB,#D6EAF8); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+          <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(21,101,192,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(21,101,192,0.06) 1px,transparent 1px);background-size:20px 20px;"></div>
+          <div style="position:relative;z-index:1;text-align:center;">
+            <div style="font-family:var(--font-m);font-size:10px;color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;">Tuya Smart</div>
+            <div style="font-family:var(--font-h);font-size:22px;font-weight:800;color:var(--navy);margin-top:6px;">Cảm biến môi trường</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:4px;">Nhiệt độ · Độ ẩm · Khí gas</div>
+          </div>
+        </div>
+        <div style="padding:20px 22px;">
+          <p style="font-size:13px;color:var(--muted);line-height:1.7;">Cảnh báo Telegram ngay khi phát hiện nhiệt độ bất thường hoặc rò rỉ khí độc hại.</p>
+          <a href="#contact" style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:12px;font-weight:700;color:var(--blue);font-family:var(--font-m);">Hỏi báo giá →</a>
+        </div>
+      </div>
+
+      <!-- Placeholder card A4 -->
+      <div style="background:var(--white); border:2px dashed var(--border); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:280px; gap:10px; cursor:default; opacity:0.6;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <div style="font-size:13px;color:var(--muted);font-family:var(--font-m);">Sản phẩm sắp ra mắt</div>
+        <div style="font-size:11px;color:var(--border);font-family:var(--font-m);">Đang cập nhật...</div>
+      </div>
+
+      <!-- Placeholder card A5 -->
+      <div style="background:var(--white); border:2px dashed var(--border); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:280px; gap:10px; cursor:default; opacity:0.6;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <div style="font-size:13px;color:var(--muted);font-family:var(--font-m);">Sản phẩm sắp ra mắt</div>
+        <div style="font-size:11px;color:var(--border);font-family:var(--font-m);">Đang cập nhật...</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CATEGORY B: Industrial Security -->
+  <div>
+    <div style="display:flex; align-items:center; gap:16px; margin-bottom:32px;">
+      <div style="width:4px; height:40px; background:linear-gradient(135deg,#0C2554,#0EA5E9); border-radius:2px; flex-shrink:0;"></div>
+      <div>
+        <div style="font-family:var(--font-m); font-size:11px; color:var(--blue); letter-spacing:2px; text-transform:uppercase; margin-bottom:4px;">Nhóm B</div>
+        <h3 style="font-family:var(--font-h); font-size:clamp(22px,3vw,32px); font-weight:800; color:var(--navy); line-height:1.1;">Thiết bị an toàn &amp; An ninh công nghiệp</h3>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap:20px;">
+
+      <!-- Product B1: Cổng xếp -->
+      <div style="background:var(--white); border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 28px rgba(12,37,84,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="height:180px; background:linear-gradient(135deg,#0C2554,#1565C0); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+          <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(14,165,233,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(14,165,233,0.07) 1px,transparent 1px);background-size:24px 24px;"></div>
+          <div style="position:relative;z-index:1;text-align:center;">
+            <div style="font-family:var(--font-m);font-size:10px;color:rgba(14,165,233,0.8);letter-spacing:1.5px;text-transform:uppercase;">An ninh</div>
+            <div style="font-family:var(--font-h);font-size:22px;font-weight:800;color:white;margin-top:6px;">Cổng xếp tự động</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:4px;">Remote · Thẻ từ · App</div>
+          </div>
+        </div>
+        <div style="padding:20px 22px;">
+          <p style="font-size:13px;color:var(--muted);line-height:1.7;">Kiểm soát ra vào tự động, ghi log phương tiện, lập lịch đóng mở theo ca làm việc.</p>
+          <a href="#contact" style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:12px;font-weight:700;color:var(--blue);font-family:var(--font-m);">Hỏi báo giá →</a>
+        </div>
+      </div>
+
+      <!-- Product B2: Máy chấm công -->
+      <div style="background:var(--white); border:1px solid var(--border); border-radius:12px; overflow:hidden; transition:all 0.3s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 28px rgba(12,37,84,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="height:180px; background:linear-gradient(135deg,#0C2554,#1565C0); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+          <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(14,165,233,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(14,165,233,0.07) 1px,transparent 1px);background-size:24px 24px;"></div>
+          <div style="position:relative;z-index:1;text-align:center;">
+            <div style="font-family:var(--font-m);font-size:10px;color:rgba(14,165,233,0.8);letter-spacing:1.5px;text-transform:uppercase;">Quản lý nhân sự</div>
+            <div style="font-family:var(--font-h);font-size:22px;font-weight:800;color:white;margin-top:6px;">Máy chấm công</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:4px;">Vân tay · Khuôn mặt</div>
+          </div>
+        </div>
+        <div style="padding:20px 22px;">
+          <p style="font-size:13px;color:var(--muted);line-height:1.7;">Nhận diện vân tay &amp; khuôn mặt, xuất báo cáo chấm công tự động, tích hợp phần mềm tính lương.</p>
+          <a href="#contact" style="display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:12px;font-weight:700;color:var(--blue);font-family:var(--font-m);">Hỏi báo giá →</a>
+        </div>
+      </div>
+
+      <!-- Placeholder B3 -->
+      <div style="background:var(--white); border:2px dashed var(--border); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:280px; gap:10px; cursor:default; opacity:0.6;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <div style="font-size:13px;color:var(--muted);font-family:var(--font-m);">Sản phẩm sắp ra mắt</div>
+        <div style="font-size:11px;color:var(--border);font-family:var(--font-m);">Đang cập nhật...</div>
+      </div>
+
+      <!-- Placeholder B4 -->
+      <div style="background:var(--white); border:2px dashed var(--border); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:280px; gap:10px; cursor:default; opacity:0.6;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <div style="font-size:13px;color:var(--muted);font-family:var(--font-m);">Sản phẩm sắp ra mắt</div>
+        <div style="font-size:11px;color:var(--border);font-family:var(--font-m);">Đang cập nhật...</div>
+      </div>
+
+      <!-- Placeholder B5 -->
+      <div style="background:var(--white); border:2px dashed var(--border); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:280px; gap:10px; cursor:default; opacity:0.6;">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <div style="font-size:13px;color:var(--muted);font-family:var(--font-m);">Sản phẩm sắp ra mắt</div>
+        <div style="font-size:11px;color:var(--border);font-family:var(--font-m);">Đang cập nhật...</div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════
+     NÔNG NGHIỆP SỐ
+══════════════════════════════════ -->
+<section id="agri" style="background: linear-gradient(135deg, #0a1f0a 0%, #0C2554 100%); position:relative; overflow:hidden;">
+  <div style="position:absolute; inset:0; background-image: linear-gradient(rgba(34,197,94,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(34,197,94,0.04) 1px, transparent 1px); background-size:40px 40px;"></div>
+  <div style="position:relative; z-index:1;">
+    <div class="text-center reveal" style="margin-bottom:52px;">
+      <div class="section-tag" style="justify-content:center; color:#4ade80;">Nông nghiệp số</div>
+      <h2 class="section-h2" style="color:var(--white);">Chuyển đổi số<br>cho Nông nghiệp · Chăn nuôi · Thủy sản</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,0.55); margin:14px auto 0;">Nông nghiệp Việt Nam đang bước vào giai đoạn chuyển đổi số. Nam Hai Technology mang công nghệ IoT thực tiễn đến trang trại, ao nuôi và chuồng trại — giúp người nông dân sản xuất nhiều hơn, tốn ít công hơn và ra quyết định dựa trên dữ liệu thật.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:24px;">
+
+      <div class="service-card reveal reveal-delay-1" style="background:rgba(255,255,255,0.04); border-color:rgba(74,222,128,0.2);">
+        <div class="service-icon" style="background:rgba(74,222,128,0.1);">🌿</div>
+        <h3 style="color:var(--white);">Giám sát môi trường trồng trọt</h3>
+        <p style="color:rgba(255,255,255,0.55);">Cảm biến đo nhiệt độ, độ ẩm đất, cường độ ánh sáng và CO₂ trong nhà kính — gửi cảnh báo ngay khi điều kiện vượt ngưỡng. Nông dân theo dõi từ xa qua điện thoại mà không cần ra đồng kiểm tra thủ công.</p>
+        <div class="service-tags">
+          <span class="tag" style="color:#4ade80; background:rgba(74,222,128,0.1);">Nhiệt độ & Độ ẩm</span>
+          <span class="tag" style="color:#4ade80; background:rgba(74,222,128,0.1);">Nhà kính thông minh</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-2" style="background:rgba(255,255,255,0.04); border-color:rgba(74,222,128,0.2);">
+        <div class="service-icon" style="background:rgba(74,222,128,0.1);">💧</div>
+        <h3 style="color:var(--white);">Tự động hóa tưới tiêu</h3>
+        <p style="color:rgba(255,255,255,0.55);">Hệ thống tưới tự động kích hoạt theo lịch hoặc theo dữ liệu cảm biến đất — tưới đúng lúc, đúng lượng, không lãng phí nước. Tiết kiệm đến 40% chi phí nước và giảm hao hụt do tưới sai thời điểm.</p>
+        <div class="service-tags">
+          <span class="tag" style="color:#4ade80; background:rgba(74,222,128,0.1);">Tưới theo cảm biến</span>
+          <span class="tag" style="color:#4ade80; background:rgba(74,222,128,0.1);">Tiết kiệm 40% nước</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-3" style="background:rgba(255,255,255,0.04); border-color:rgba(74,222,128,0.2);">
+        <div class="service-icon" style="background:rgba(74,222,128,0.1);">🐄</div>
+        <h3 style="color:var(--white);">Chăn nuôi thông minh</h3>
+        <p style="color:rgba(255,255,255,0.55);">Giám sát nhiệt độ và độ ẩm chuồng trại 24/7, tự động bật quạt thông gió và hệ thống làm mát khi vượt ngưỡng. Máng ăn tự động chia khẩu phần theo lịch — giảm lãng phí thức ăn và công chăm sóc thủ công.</p>
+        <div class="service-tags">
+          <span class="tag" style="color:#4ade80; background:rgba(74,222,128,0.1);">Thông gió tự động</span>
+          <span class="tag" style="color:#4ade80; background:rgba(74,222,128,0.1);">Máng ăn thông minh</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-1" style="background:rgba(255,255,255,0.04); border-color:rgba(74,222,128,0.2);">
+        <div class="service-icon" style="background:rgba(74,222,128,0.1);">🐟</div>
+        <h3 style="color:var(--white);">Nuôi trồng thủy sản</h3>
+        <p style="color:rgba(255,255,255,0.55);">Cảm biến theo dõi oxy hòa tan, pH và nhiệt độ ao nuôi liên tục — cảnh báo sớm nguy cơ tôm cá chết hàng loạt. Máy cho ăn tự động vận hành theo lịch và theo tín hiệu cảm biến, giảm hao phí thức ăn đến 30%.</p>
+        <div class="service-tags">
+          <span class="tag" style="color:#4ade80; background:rgba(74,222,128,0.1);">pH & Oxy hòa tan</span>
+          <span class="tag" style="color:#4ade80; background:rgba(74,222,128,0.1);">Cho ăn tự động</span>
+        </div>
+      </div>
+
+      <div class="service-card reveal reveal-delay-2" style="background:rgba(255,255,255,0.04); border-color:rgba(74,222,128,0.2); grid-column: span 2;">
+        <div style="display:flex; align-items:flex-start; gap:20px; flex-wrap:wrap;">
+          <div style="flex:1; min-width:200px;">
+            <div class="service-icon" style="background:rgba(74,222,128,0.1); margin-bottom:16px;">📱</div>
+            <h3 style="color:var(--white); margin-bottom:10px;">Trung tâm quản lý — 1 app, toàn bộ trang trại</h3>
+            <p style="color:rgba(255,255,255,0.55); font-size:14px; line-height:1.7;">Tất cả dữ liệu từ ao, chuồng, vườn và kho lạnh hiển thị trên một màn hình duy nhất. Không cần đến tận nơi — chủ trang trại ra quyết định từ thành phố, người quản lý nhận cảnh báo ngay trên Telegram.</p>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:10px; align-self:center; flex:1; min-width:200px;">
+            <div style="display:flex; align-items:center; gap:12px; background:rgba(74,222,128,0.06); border:1px solid rgba(74,222,128,0.15); border-radius:8px; padding:12px 16px;">
+              <span style="font-size:18px;">✓</span>
+              <span style="font-size:13px; color:rgba(255,255,255,0.7);">Triển khai trong 1–2 ngày, không ảnh hưởng sản xuất</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; background:rgba(74,222,128,0.06); border:1px solid rgba(74,222,128,0.15); border-radius:8px; padding:12px 16px;">
+              <span style="font-size:18px;">✓</span>
+              <span style="font-size:13px; color:rgba(255,255,255,0.7);">Phù hợp trang trại nhỏ lẻ đến quy mô hàng chục ha</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; background:rgba(74,222,128,0.06); border:1px solid rgba(74,222,128,0.15); border-radius:8px; padding:12px 16px;">
+              <span style="font-size:18px;">✓</span>
+              <span style="font-size:13px; color:rgba(255,255,255,0.7);">Chi phí đầu tư thu hồi trung bình trong 1 vụ sản xuất</span>
+            </div>
+          </div>
+        </div>
+        <a href="#contact" class="product-cta" style="margin-top:24px; display:inline-flex;">Tư vấn giải pháp nông nghiệp →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     PROJECTS
+══════════════════════════════════ -->
+<section id="projects">
+  <div class="text-center reveal">
+    <div class="section-tag">Dự án tiêu biểu</div>
+    <h2 class="section-h2">Kết quả thực tế<br>từ khách hàng</h2>
+    <p class="section-sub">Những dự án chúng tôi đã triển khai tại các nhà máy sản xuất ở miền Bắc Việt Nam.</p>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal reveal-delay-1">
+      <div class="project-img">
+        <div class="project-img-icon">🚗</div>
+      </div>
+      <div class="project-body">
+        <div class="project-category">Ô tô · Hiệu chỉnh</div>
+        <h3>DatBike – Hiệu chỉnh đèn pha</h3>
+        <p>Hiệu chỉnh toàn bộ hệ thống đèn pha cho dây chuyền kiểm định xe máy điện, đảm bảo đúng tiêu chuẩn góc chiếu theo QCVN.</p>
+        <div class="project-results">
+          <div class="result-item">Hoàn thành 2 ngày</div>
+          <div class="result-item">2 dòng xe · 4 trạm</div>
+          <div class="result-item">Đạt chuẩn 100%</div>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal reveal-delay-2">
+      <div class="project-img" style="background: linear-gradient(135deg, #1e3a5f, #0ea5e9);">
+        <div class="project-img-icon">🏭</div>
+      </div>
+      <div class="project-body">
+        <div class="project-category">Cơ khí · IoT Monitoring</div>
+        <h3>Nhà máy cơ khí Bắc Ninh</h3>
+        <p>Lắp đặt 8 thiết bị H1 giám sát 8 máy CNC, tích hợp Telegram alert cho quản đốc. Giảm thời gian phản ứng sự cố từ 45 phút xuống 5 phút.</p>
+        <div class="project-results">
+          <div class="result-item">8 máy giám sát</div>
+          <div class="result-item">Giảm 89% thời gian phản ứng</div>
+          <div class="result-item">Tiết kiệm 15h/tháng</div>
+        </div>
+      </div>
+    </div>
+    <div class="project-card reveal reveal-delay-3">
+      <div class="project-img" style="background: linear-gradient(135deg, #1a3a2a, #16a34a);">
+        <div class="project-img-icon">⚡</div>
+      </div>
+      <div class="project-body">
+        <div class="project-category">Điện tử · Tự động hóa</div>
+        <h3>Cấu hình biến tần VFD – Khu CN Đông Anh</h3>
+        <p>Cấu hình và hiệu chỉnh hệ thống biến tần HOLIP cho dây chuyền lắp ráp, tối ưu tốc độ băng tải theo ca sản xuất.</p>
+        <div class="project-results">
+          <div class="result-item">12 biến tần</div>
+          <div class="result-item">Tiết kiệm 18% điện năng</div>
+          <div class="result-item">ROI &lt; 3 tháng</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     PROCESS
+══════════════════════════════════ -->
+<section id="process">
+  <div class="text-center reveal">
+    <div class="section-tag">Quy trình làm việc</div>
+    <h2 class="section-h2">Từ liên hệ đến vận hành<br>chỉ trong 1 tuần</h2>
+  </div>
+  <div class="process-steps">
+    <div class="step-item reveal reveal-delay-1">
+      <div class="step-num">01</div>
+      <h4>Khảo sát miễn phí</h4>
+      <p>Kỹ thuật viên đến nhà máy đánh giá hiện trạng máy móc và nhu cầu thực tế.</p>
+    </div>
+    <div class="step-item reveal reveal-delay-2">
+      <div class="step-num">02</div>
+      <h4>Báo giá rõ ràng</h4>
+      <p>Gửi báo giá chi tiết trong 24h, không phát sinh chi phí ẩn, cam kết bằng hợp đồng.</p>
+    </div>
+    <div class="step-item reveal reveal-delay-3">
+      <div class="step-num">03</div>
+      <h4>Triển khai tại chỗ</h4>
+      <p>Lắp đặt, cấu hình và kiểm tra ngay tại nhà máy, không làm gián đoạn sản xuất.</p>
+    </div>
+    <div class="step-item reveal">
+      <div class="step-num">04</div>
+      <h4>Bàn giao & Đào tạo</h4>
+      <p>Hướng dẫn vận hành cho đội ngũ của bạn, hỗ trợ 30 ngày sau triển khai.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CONTACT
+══════════════════════════════════ -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-info reveal">
+      <div class="section-tag">Liên hệ</div>
+      <h2 class="section-h2">Nhận tư vấn<br>miễn phí ngay</h2>
+      <p class="section-sub">Điền form để đội kỹ thuật Nam Hai liên hệ trong vòng 2 giờ làm việc — hoặc gọi thẳng cho Mr. Thái.</p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <span class="cicon">📍</span>
+          <div>
+            <h4>VĂN PHÒNG</h4>
+            <p>Số 54 Đặng Vũ Hỷ, Phường Nam Bình, Thành phố Ninh Bình</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="cicon">📞</span>
+          <div>
+            <h4>ĐIỆN THOẠI</h4>
+            <p>0886 893 357 (Mr. Thái)</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="cicon">✉️</span>
+          <div>
+            <h4>EMAIL</h4>
+            <p>info@namhai.vn</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="cicon">🕐</span>
+          <div>
+            <h4>GIỜ LÀM VIỆC</h4>
+            <p>Thứ 2 – Thứ 7: 8:00 – 18:00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal reveal-delay-2">
+      <div class="form-title">Gửi yêu cầu báo giá</div>
+      <div class="form-sub">Chúng tôi sẽ liên hệ lại trong vòng 2 giờ làm việc</div>
+      <form id="contactForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Họ và tên *</label>
+            <input type="text" placeholder="Nguyễn Văn A" required>
+          </div>
+          <div class="form-group">
+            <label>Số điện thoại *</label>
+            <input type="tel" placeholder="0912 345 678" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="email@congtybạn.vn">
+          </div>
+          <div class="form-group">
+            <label>Tên công ty *</label>
+            <input type="text" placeholder="Công ty TNHH ABC" required>
+          </div>
+          <div class="form-group full">
+            <label>Dịch vụ quan tâm *</label>
+            <select required>
+              <option value="">-- Chọn dịch vụ --</option>
+              <option>Giám sát IoT máy móc / thiết bị</option>
+              <option>Thiết bị thông minh Tuya (nhà / cửa hàng)</option>
+              <option>An ninh công nghiệp (cổng, chấm công, robot)</option>
+              <option>Nông nghiệp số (tưới tiêu, chăn nuôi, thủy sản)</option>
+              <option>Tự động hóa / Lập trình PLC</option>
+              <option>Hiệu chỉnh thiết bị (đèn pha, cảm biến)</option>
+              <option>Tư vấn chuyển đổi số tổng thể</option>
+              <option>Khác</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Mô tả nhu cầu</label>
+            <textarea placeholder="Nhà máy tôi có 10 máy CNC, muốn giám sát tình trạng hoạt động và nhận cảnh báo khi máy dừng..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="form-submit">
+          📋 Gửi yêu cầu báo giá ngay
+        </button>
+        <p class="form-note">🔒 Thông tin của bạn được bảo mật hoàn toàn</p>
+        <div class="success-msg" id="successMsg">
+          ✅ Cảm ơn! Chúng tôi sẽ liên hệ lại trong vòng 2 giờ làm việc.
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+          <polygon points="2,2 12,2 12,34 2,34" fill="url(#ng2)"/>
+          <polygon points="12,2 22,2 30,34 20,34" fill="url(#ng2)"/>
+          <polygon points="24,2 34,2 34,34 24,34" fill="url(#ng2)"/>
+          <polygon points="14,2 18,2 26,34 22,34" fill="white" opacity="0.22"/>
+          <defs>
+            <linearGradient id="ng2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#42A5F5"/>
+              <stop offset="100%" stop-color="#1565C0"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div>
+          <div class="brand">NAM HAI</div>
+          <span class="sub">TECHNOLOGY</span>
+        </div>
+      </div>
+      <p>Giải pháp IoT giám sát, cảnh báo và tự động hóa vận hành — cho nhà máy, chuỗi F&B, kho bãi, cửa hàng và nông nghiệp Việt Nam.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Dịch vụ</h4>
+      <ul>
+        <li><a href="#services">Hiệu chỉnh thiết bị</a></li>
+        <li><a href="#product">Giám sát IoT H1</a></li>
+        <li><a href="#services">Tự động hóa</a></li>
+        <li><a href="#services">Bảo trì định kỳ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Công ty</h4>
+      <ul>
+        <li><a href="#about">Về chúng tôi</a></li>
+        <li><a href="#projects">Dự án tiêu biểu</a></li>
+        <li><a href="#process">Quy trình</a></li>
+        <li><a href="#contact">Liên hệ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Nam Hai Technology. Tất cả quyền được bảo lưu.</p>
+    <div class="footer-socials">
+      <a href="#" title="Facebook">f</a>
+      <a href="#" title="Zalo">Z</a>
+      <a href="#" title="LinkedIn">in</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════ -->
+<script>
+// Navbar scroll
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Mobile menu
+document.getElementById('navToggle').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+});
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => observer.observe(el));
+
+// Form submit
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const btn = this.querySelector('.form-submit');
+  btn.textContent = 'Đang gửi...';
+  btn.disabled = true;
+  setTimeout(() => {
+    document.getElementById('successMsg').style.display = 'block';
+    btn.textContent = '✅ Đã gửi thành công!';
+    btn.style.background = '#22C55E';
+  }, 1200);
+});
+
+// Animate bars on hero
+function animateBars() {
+  const bars = document.querySelectorAll('.bar');
+  bars.forEach((bar, i) => {
+    const h = bar.style.height;
+    bar.style.height = '0';
+    setTimeout(() => { bar.style.transition = 'height 0.6s ease'; bar.style.height = h; }, i * 80 + 300);
+  });
+}
+animateBars();
+</script>
+</body>
+</html>
