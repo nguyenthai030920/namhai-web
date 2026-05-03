@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nam Hai Technology – Giải pháp vận hành thông minh cho mọi lĩnh vực</title>
+<meta name="description" content="Nam Hai Technology – Giải pháp IoT giám sát, cảnh báo và tự động hóa cho nhà máy, F&B, kho bãi, cửa hàng và nông nghiệp tại Việt Nam.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #0A1628;
+  --navy2:  #0F2040;
+  --blue:   #1A56DB;
+  --blue2:  #1E40AF;
+  --cyan:   #06B6D4;
+  --cyan2:  #0891B2;
+  --white:  #FFFFFF;
+  --off:    #F8FAFC;
+  --off2:   #F1F5F9;
+  --text:   #0F172A;
+  --text2:  #334155;
+  --muted:  #64748B;
+  --border: #E2E8F0;
+  --border2:#CBD5E1;
+  --green:  #10B981;
+
+  --grad:   linear-gradient(135deg, #0A1628 0%, #0F2040 50%, #1A3A6B 100%);
+  --grad2:  linear-gradient(135deg, #1A56DB, #06B6D4);
+  --grad3:  linear-gradient(135deg, #0F2040, #1A56DB);
+
+  --font-h: 'Plus Jakarta Sans', sans-serif;
+  --font-b: 'Space Grotesk', sans-serif;
+  --font-m: 'JetBrains Mono', monospace;
+
+  --r:      8px;
+  --r2:     12px;
+  --shadow: 0 4px 24px rgba(10,22,40,0.10);
+  --shadow2:0 8px 40px rgba(10,22,40,0.16);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-b);color:var(--text);background:var(--white);line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--off)}
+::-webkit-scrollbar-thumb{background:var(--blue);border-radius:2px}
+
+/* ─── TOP BAR ─── */
+#topbar {
+  background: var(--navy);
+  padding: 8px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  font-family: var(--font-m);
+  letter-spacing: 0.3px;
+}
+.topbar-left { display: flex; gap: 28px; align-items: center; }
+.topbar-left span::before { content: ''; }
+.topbar-right { display: flex; gap: 20px; align-items: center; }
+.topbar-right a { color: rgba(255,255,255,0.5); transition: color 0.2s; }
+.topbar-right a:hover { color: var(--cyan); }
+@media(max-width:768px){ #topbar { display: none; } }
+
+/* ─── NAVBAR ─── */
+#navbar {
+  position: sticky; top: 0; z-index: 1000;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+  transition: box-shadow 0.3s;
+}
+#navbar.shadow { box-shadow: 0 2px 20px rgba(10,22,40,0.10); }
+.nav-logo { display: flex; align-items: center; gap: 10px; }
+.nav-logo-icon {
+  width: 34px; height: 34px;
+  background: var(--grad2);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.nav-logo-icon svg { width: 20px; height: 20px; }
+.nav-logo-text .brand {
+  font-family: var(--font-h);
+  font-size: 15px; font-weight: 800;
+  color: var(--navy); letter-spacing: 0.5px;
+  display: block; line-height: 1.1;
+}
+.nav-logo-text .sub {
+  font-size: 9px; color: var(--muted);
+  font-family: var(--font-m); letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.nav-links { display: flex; align-items: center; gap: 2px; }
+.nav-links a {
+  font-size: 13.5px; font-weight: 500; color: var(--text2);
+  padding: 6px 14px; border-radius: 6px;
+  transition: all 0.2s;
+}
+.nav-links a:hover { color: var(--navy); background: var(--off2); }
+.nav-links .nav-cta {
+  background: var(--blue);
+  color: white !important;
+  font-weight: 600;
+  padding: 8px 20px !important;
+  border-radius: 6px;
+  margin-left: 8px;
+}
+.nav-links .nav-cta:hover { background: var(--blue2) !important; }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+.nav-toggle span { display: block; width: 22px; height: 2px; background: var(--navy); margin: 5px 0; border-radius: 1px; transition: all 0.3s; }
+
+/* ─── HERO ─── */
+#hero {
+  background: var(--navy);
+  min-height: 92vh;
+  display: flex; align-items: center;
+  position: relative; overflow: hidden;
+  padding: 80px 5%;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(6,182,212,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6,182,212,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-blob {
+  position: absolute; border-radius: 50%; filter: blur(100px); pointer-events: none;
+}
+.hero-blob-1 { width: 600px; height: 600px; background: rgba(26,86,219,0.2); top: -200px; right: -100px; }
+.hero-blob-2 { width: 400px; height: 400px; background: rgba(6,182,212,0.12); bottom: -100px; left: 10%; }
+
+.hero-inner {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+  width: 100%; max-width: 1280px; margin: 0 auto;
+}
+@media(max-width:1024px){ .hero-inner { grid-template-columns: 1fr; gap: 48px; } }
+
+.hero-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid rgba(6,182,212,0.35);
+  background: rgba(6,182,212,0.08);
+  color: var(--cyan);
+  font-size: 11px; font-family: var(--font-m);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 20px;
+  margin-bottom: 24px;
+}
+.hero-label::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+.hero-h1 {
+  font-family: var(--font-h);
+  font-size: clamp(36px, 4.5vw, 58px);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  margin-bottom: 20px;
+}
+.hero-h1 em { font-style: normal; background: var(--grad2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+.hero-desc {
+  font-size: 16px; color: rgba(255,255,255,0.6);
+  line-height: 1.75; max-width: 480px;
+  margin-bottom: 36px;
+}
+
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--blue); color: white;
+  font-weight: 700; font-size: 14px; font-family: var(--font-h);
+  padding: 13px 28px; border-radius: var(--r);
+  transition: all 0.25s;
+}
+.btn-primary:hover { background: #1E40AF; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(26,86,219,0.4); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.85);
+  font-weight: 500; font-size: 14px;
+  padding: 13px 28px; border-radius: var(--r);
+  transition: all 0.25s;
+}
+.btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+.hero-stats {
+  display: flex; gap: 36px; padding-top: 36px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.hstat-num {
+  font-family: var(--font-h); font-size: 32px; font-weight: 800;
+  color: white; line-height: 1;
+}
+.hstat-num span { color: var(--cyan); }
+.hstat-label { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+
+/* Hero right panel */
+.hero-panel {
+  display: flex; flex-direction: column; gap: 12px;
+}
+.hpanel-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r2);
+  padding: 18px 22px;
+  backdrop-filter: blur(10px);
+  transition: border-color 0.3s;
+}
+.hpanel-card:hover { border-color: rgba(6,182,212,0.3); }
+.hpanel-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.hpanel-title { font-family: var(--font-m); font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 1.5px; text-transform: uppercase; }
+.dot-green { width: 7px; height: 7px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981; animation: blink 2s infinite; }
+.dot-red { width: 7px; height: 7px; border-radius: 50%; background: #EF4444; box-shadow: 0 0 8px #EF4444; }
+
+.hpanel-metric { display: flex; align-items: baseline; gap: 6px; }
+.hpanel-val { font-family: var(--font-h); font-size: 36px; font-weight: 800; background: var(--grad2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
+.hpanel-unit { font-size: 14px; color: rgba(255,255,255,0.4); }
+.hpanel-sub { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 4px; }
+
+.hpanel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.hpanel-mini {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--r);
+  padding: 14px; text-align: center;
+}
+.hpanel-mini .val { font-family: var(--font-h); font-size: 26px; font-weight: 800; color: white; }
+.hpanel-mini .val span { color: var(--cyan); font-size: 14px; }
+.hpanel-mini .lbl { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 3px; font-family: var(--font-m); letter-spacing: 0.5px; }
+
+.hpanel-alert {
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: var(--r);
+  padding: 12px 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hpanel-alert-icon { width: 28px; height: 28px; border-radius: 6px; background: rgba(239,68,68,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.hpanel-alert-txt { font-size: 12px; font-weight: 600; color: #FCA5A5; line-height: 1.4; }
+.hpanel-alert-sub { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 2px; font-family: var(--font-m); }
+
+/* ─── SECTION BASE ─── */
+section { padding: 96px 5%; }
+.container { max-width: 1280px; margin: 0 auto; }
+.sec-label {
+  font-family: var(--font-m); font-size: 11px; font-weight: 500;
+  color: var(--blue); letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sec-label::before { content: ''; width: 20px; height: 2px; background: var(--blue); }
+.sec-h2 {
+  font-family: var(--font-h);
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 800; color: var(--navy);
+  line-height: 1.15; letter-spacing: -0.3px;
+}
+.sec-sub { font-size: 16px; color: var(--muted); max-width: 520px; line-height: 1.75; margin-top: 12px; }
+.text-center { text-align: center; }
+.text-center .sec-label { justify-content: center; }
+.text-center .sec-label::before { display: none; }
+.text-center .sec-sub { margin: 12px auto 0; }
+
+/* ─── CLIENTS STRIP ─── */
+#clients {
+  padding: 32px 5%;
+  background: var(--off2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.clients-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center; gap: 48px; flex-wrap: wrap;
+}
+.clients-label { font-family: var(--font-m); font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; }
+.clients-logos { display: flex; gap: 32px; align-items: center; flex-wrap: wrap; }
+.client-pill {
+  background: white; border: 1px solid var(--border);
+  border-radius: 6px; padding: 8px 18px;
+  font-family: var(--font-h); font-size: 13px; font-weight: 700;
+  color: var(--text2); letter-spacing: 0.3px;
+}
+
+/* ─── SERVICES ─── */
+#services { background: white; }
+.services-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  overflow: hidden;
+  margin-top: 56px;
+}
+@media(max-width:900px){ .services-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:600px){ .services-grid { grid-template-columns: 1fr; } }
+.svc-card {
+  background: white; padding: 36px 32px;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+}
+.svc-card:hover { background: var(--off); }
+.svc-card:hover .svc-arrow { opacity: 1; transform: translateX(0); }
+.svc-num {
+  font-family: var(--font-m); font-size: 11px;
+  color: var(--blue); letter-spacing: 1px; margin-bottom: 20px;
+  opacity: 0.6;
+}
+.svc-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: var(--off2); display: flex; align-items: center; justify-content: center;
+  margin-bottom: 18px;
+}
+.svc-card h3 {
+  font-family: var(--font-h); font-size: 18px; font-weight: 700;
+  color: var(--navy); margin-bottom: 10px; line-height: 1.3;
+}
+.svc-card p { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+.svc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+.stag {
+  font-size: 11px; font-family: var(--font-m);
+  color: var(--blue); background: #EFF6FF;
+  padding: 3px 9px; border-radius: 4px; letter-spacing: 0.2px;
+}
+.svc-arrow {
+  position: absolute; bottom: 24px; right: 24px;
+  width: 28px; height: 28px; border-radius: 6px;
+  background: var(--blue); display: flex; align-items: center; justify-content: center;
+  opacity: 0; transform: translateX(6px); transition: all 0.3s;
+}
+.svc-arrow svg { width: 14px; height: 14px; }
+
+/* ─── ABOUT ─── */
+#about { background: var(--off); }
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;
+  max-width: 1280px; margin: 0 auto;
+}
+@media(max-width:900px){ .about-grid { grid-template-columns: 1fr; gap: 48px; } }
+.about-visual { position: relative; }
+.about-card {
+  background: var(--navy);
+  border-radius: var(--r2);
+  padding: 36px;
+  position: relative; overflow: hidden;
+}
+.about-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(6,182,212,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,0.05) 1px,transparent 1px);
+  background-size: 28px 28px;
+}
+.about-metrics {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px; position: relative; z-index: 1;
+}
+.am-box {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--r); padding: 22px 18px; text-align: center;
+}
+.am-num {
+  font-family: var(--font-h); font-size: 36px; font-weight: 800;
+  background: var(--grad2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  line-height: 1;
+}
+.am-label { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 5px; font-family: var(--font-m); letter-spacing: 0.5px; }
+.about-badge {
+  position: absolute; bottom: -18px; right: 24px;
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--r); padding: 12px 18px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: var(--shadow2);
+}
+.about-badge .icon { font-size: 22px; }
+.about-badge .t { font-size: 13px; font-weight: 700; color: var(--navy); }
+.about-badge .s { font-size: 11px; color: var(--muted); }
+
+.about-content .sec-label { margin-bottom: 10px; }
+.about-content p { font-size: 15px; color: var(--text2); line-height: 1.8; margin-top: 16px; }
+.about-feats { margin-top: 28px; display: flex; flex-direction: column; gap: 12px; }
+.af-row {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 18px; background: white;
+  border: 1px solid var(--border); border-radius: var(--r);
+  border-left: 3px solid var(--blue);
+  transition: box-shadow 0.3s;
+}
+.af-row:hover { box-shadow: var(--shadow); }
+.af-row .fi { font-size: 18px; flex-shrink: 0; }
+.af-row h4 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+.af-row p { font-size: 13px; color: var(--muted); }
+
+/* ─── PRODUCTS ─── */
+#product { background: white; }
+.prod-header { max-width: 1280px; margin: 0 auto 56px; }
+.prod-cat { max-width: 1280px; margin: 0 auto 64px; }
+.prod-cat-head {
+  display: flex; align-items: center; gap: 16px;
+  padding-bottom: 20px; margin-bottom: 32px;
+  border-bottom: 2px solid var(--border);
+}
+.prod-cat-bar { width: 4px; height: 36px; background: var(--grad2); border-radius: 2px; flex-shrink: 0; }
+.prod-cat-tag { font-family: var(--font-m); font-size: 10px; color: var(--blue); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+.prod-cat-title { font-family: var(--font-h); font-size: clamp(20px,2.5vw,28px); font-weight: 800; color: var(--navy); }
+.prod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 20px; }
+.prod-card {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--r2); overflow: hidden;
+  transition: all 0.3s; cursor: default;
+}
+.prod-card:hover { border-color: var(--blue); box-shadow: var(--shadow2); transform: translateY(-3px); }
+.prod-thumb {
+  height: 160px; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.prod-thumb.light { background: linear-gradient(135deg, #EFF6FF, #DBEAFE); }
+.prod-thumb.dark  { background: var(--grad3); }
+.prod-thumb-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(26,86,219,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(26,86,219,0.06) 1px,transparent 1px);
+  background-size: 20px 20px;
+}
+.prod-thumb-grid.light-grid {
+  background-image: linear-gradient(rgba(26,86,219,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(26,86,219,0.06) 1px,transparent 1px);
+}
+.prod-thumb-grid.dark-grid {
+  background-image: linear-gradient(rgba(6,182,212,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,0.08) 1px,transparent 1px);
+}
+.prod-thumb-content { position: relative; z-index: 1; text-align: center; padding: 0 16px; }
+.prod-thumb-tag { font-family: var(--font-m); font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+.prod-thumb.light .prod-thumb-tag { color: var(--blue); opacity: 0.7; }
+.prod-thumb.dark .prod-thumb-tag { color: var(--cyan); opacity: 0.8; }
+.prod-thumb-name { font-family: var(--font-h); font-size: 18px; font-weight: 800; line-height: 1.2; }
+.prod-thumb.light .prod-thumb-name { color: var(--navy); }
+.prod-thumb.dark .prod-thumb-name { color: white; }
+.prod-thumb-sub { font-size: 11px; margin-top: 4px; }
+.prod-thumb.light .prod-thumb-sub { color: var(--muted); }
+.prod-thumb.dark .prod-thumb-sub { color: rgba(255,255,255,0.5); }
+.prod-body { padding: 18px 20px; }
+.prod-body p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+.prod-cta {
+  display: inline-flex; align-items: center; gap: 5px;
+  margin-top: 12px; font-size: 12px; font-weight: 700;
+  color: var(--blue); font-family: var(--font-m); letter-spacing: 0.3px;
+  transition: gap 0.2s;
+}
+.prod-card:hover .prod-cta { gap: 8px; }
+.prod-placeholder {
+  border: 2px dashed var(--border);
+  border-radius: var(--r2);
+  min-height: 260px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; opacity: 0.5;
+}
+.prod-placeholder svg { color: var(--muted); }
+.prod-placeholder .t1 { font-size: 13px; color: var(--muted); font-family: var(--font-m); }
+.prod-placeholder .t2 { font-size: 11px; color: var(--border2); font-family: var(--font-m); }
+
+/* ─── AGRI ─── */
+#agri {
+  background: linear-gradient(160deg, #071A07 0%, #0A1628 100%);
+  position: relative; overflow: hidden;
+}
+#agri::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(16,185,129,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(16,185,129,0.04) 1px,transparent 1px);
+  background-size: 44px 44px;
+}
+.agri-inner { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; }
+.agri-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 20px; margin-top: 52px; }
+.agri-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(16,185,129,0.15);
+  border-radius: var(--r2); padding: 28px;
+  transition: all 0.3s;
+}
+.agri-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(16,185,129,0.35); }
+.agri-card-icon {
+  width: 40px; height: 40px; border-radius: 8px;
+  background: rgba(16,185,129,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; margin-bottom: 16px;
+}
+.agri-card h3 { font-family: var(--font-h); font-size: 17px; font-weight: 700; color: white; margin-bottom: 10px; }
+.agri-card p { font-size: 13.5px; color: rgba(255,255,255,0.5); line-height: 1.7; }
+.agri-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.atag {
+  font-size: 11px; font-family: var(--font-m); letter-spacing: 0.2px;
+  color: #6EE7B7; background: rgba(16,185,129,0.1);
+  padding: 3px 9px; border-radius: 4px;
+}
+.agri-cta-row { margin-top: 40px; text-align: center; }
+.btn-green {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--green); color: white;
+  font-weight: 700; font-size: 14px; font-family: var(--font-h);
+  padding: 13px 32px; border-radius: var(--r);
+  transition: all 0.25s;
+}
+.btn-green:hover { background: #059669; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(16,185,129,0.3); }
+
+/* ─── PROJECTS ─── */
+#projects { background: var(--off); }
+.proj-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+  gap: 24px; margin-top: 52px;
+}
+.proj-card {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--r2); overflow: hidden; transition: all 0.3s;
+}
+.proj-card:hover { box-shadow: var(--shadow2); transform: translateY(-3px); }
+.proj-thumb {
+  height: 150px; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.proj-thumb::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.05) 1px,transparent 1px);
+  background-size: 24px 24px;
+}
+.proj-thumb-icon { font-size: 44px; position: relative; z-index: 1; }
+.proj-body { padding: 22px 24px; }
+.proj-cat { font-family: var(--font-m); font-size: 10px; color: var(--blue); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+.proj-body h3 { font-family: var(--font-h); font-size: 19px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.proj-body p { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+.proj-results { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.presult {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 12px; color: var(--text2); font-family: var(--font-m);
+}
+.presult::before { content: '✓'; color: var(--green); font-weight: 700; }
+
+/* ─── PROCESS ─── */
+#process { background: white; }
+.proc-steps {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 0;
+  margin-top: 56px; position: relative;
+}
+.proc-steps::before {
+  content: ''; position: absolute;
+  top: 28px; left: 12.5%; right: 12.5%;
+  height: 1px; background: linear-gradient(90deg, var(--border), var(--blue), var(--border));
+}
+@media(max-width:700px){ .proc-steps { grid-template-columns: 1fr 1fr; gap: 32px; } .proc-steps::before { display: none; } }
+.pstep { text-align: center; padding: 0 16px; }
+.pstep-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: white; border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 18px;
+  font-family: var(--font-h); font-size: 18px; font-weight: 800; color: var(--navy);
+  position: relative; z-index: 1; transition: all 0.3s;
+}
+.pstep:hover .pstep-num { background: var(--blue); color: white; border-color: var(--blue); box-shadow: 0 0 0 6px rgba(26,86,219,0.1); }
+.pstep h4 { font-family: var(--font-h); font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.pstep p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+/* ─── CONTACT ─── */
+#contact { background: var(--navy); position: relative; overflow: hidden; }
+#contact::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 50% 60% at 85% 50%, rgba(6,182,212,0.07), transparent);
+}
+.contact-inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr 1.4fr; gap: 72px; align-items: start;
+  max-width: 1280px; margin: 0 auto;
+}
+@media(max-width:900px){ .contact-inner { grid-template-columns: 1fr; gap: 48px; } }
+.cinfo .sec-label { color: var(--cyan); }
+.cinfo .sec-label::before { background: var(--cyan); }
+.cinfo .sec-h2 { color: white; }
+.cinfo .sec-sub { color: rgba(255,255,255,0.5); }
+.cinfo-items { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
+.cinfo-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--r);
+  transition: border-color 0.3s;
+}
+.cinfo-item:hover { border-color: rgba(6,182,212,0.25); }
+.cinfo-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.cinfo-item h4 { font-family: var(--font-m); font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+.cinfo-item p { font-size: 14px; color: rgba(255,255,255,0.8); font-weight: 500; }
+
+.cform {
+  background: white; border-radius: var(--r2); padding: 36px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+}
+.cform-title { font-family: var(--font-h); font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+.cform-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.cform-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media(max-width:600px){ .cform-grid { grid-template-columns: 1fr; } }
+.fg { display: flex; flex-direction: column; gap: 5px; }
+.fg.full { grid-column: 1/-1; }
+.fg label { font-size: 12px; font-weight: 600; color: var(--navy); letter-spacing: 0.3px; }
+.fg input, .fg select, .fg textarea {
+  border: 1.5px solid var(--border); border-radius: var(--r);
+  padding: 11px 14px; font-family: var(--font-b); font-size: 14px;
+  color: var(--text); background: white; outline: none; transition: border-color 0.2s;
+}
+.fg input:focus, .fg select:focus, .fg textarea:focus {
+  border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,86,219,0.1);
+}
+.fg textarea { resize: vertical; min-height: 96px; }
+.cform-submit {
+  width: 100%; margin-top: 10px;
+  background: var(--blue); color: white;
+  font-family: var(--font-h); font-weight: 700; font-size: 15px;
+  border: none; border-radius: var(--r); padding: 14px;
+  cursor: pointer; transition: all 0.25s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.cform-submit:hover { background: var(--blue2); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,86,219,0.3); }
+.cform-note { font-size: 11px; color: var(--muted); text-align: center; margin-top: 10px; }
+.cform-success {
+  display: none; background: #F0FDF4; border: 1px solid #BBF7D0;
+  color: #15803D; border-radius: var(--r); padding: 12px 16px;
+  font-size: 13px; text-align: center; margin-top: 12px;
+}
+
+/* ─── FOOTER ─── */
+footer { background: #060F1F; padding: 52px 5% 28px; border-top: 1px solid rgba(255,255,255,0.06); }
+.footer-top {
+  display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 48px;
+  max-width: 1280px; margin: 0 auto;
+  padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+@media(max-width:700px){ .footer-top { grid-template-columns: 1fr; gap: 28px; } }
+.footer-brand p { font-size: 13px; color: rgba(255,255,255,0.35); line-height: 1.7; margin-top: 14px; max-width: 280px; }
+.footer-logo { display: flex; align-items: center; gap: 10px; }
+.footer-logo-icon { width: 32px; height: 32px; background: var(--grad2); border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+.footer-logo-icon svg { width: 18px; height: 18px; }
+.footer-logo .brand { font-family: var(--font-h); font-size: 15px; font-weight: 800; color: white; letter-spacing: 0.5px; display: block; }
+.footer-logo .sub { font-size: 9px; color: rgba(255,255,255,0.3); font-family: var(--font-m); letter-spacing: 1.5px; text-transform: uppercase; display: block; margin-top: 2px; }
+.footer-col h4 { font-family: var(--font-m); font-size: 10px; color: var(--cyan); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+.footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul li a { font-size: 13.5px; color: rgba(255,255,255,0.45); transition: color 0.2s; }
+.footer-col ul li a:hover { color: white; }
+.footer-bottom {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 24px; flex-wrap: wrap; gap: 12px;
+}
+.footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.25); }
+.footer-socials { display: flex; gap: 8px; }
+.footer-socials a {
+  width: 32px; height: 32px; border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px; display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.4); transition: all 0.2s;
+}
+.footer-socials a:hover { border-color: var(--cyan); color: var(--cyan); }
+
+/* ─── MOBILE ─── */
+@media(max-width:768px){
+  section { padding: 72px 5%; }
+  .nav-links { display: none; flex-direction: column; position: fixed; top: 64px; left: 0; right: 0; background: white; border-bottom: 1px solid var(--border); padding: 16px; gap: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 12px 16px; color: var(--text); }
+  .nav-toggle { display: block; }
+  .hero-stats { gap: 20px; flex-wrap: wrap; }
+  .hero-actions { flex-direction: column; }
+  .hero-actions a { text-align: center; justify-content: center; }
+  .about-badge { display: none; }
+}
+
+/* ─── REVEAL ─── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: 0.08s; }
+.d2 { transition-delay: 0.16s; }
+.d3 { transition-delay: 0.24s; }
+.d4 { transition-delay: 0.32s; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.hero-label { animation: fadeUp 0.5s 0.1s both; }
+.hero-h1    { animation: fadeUp 0.5s 0.2s both; }
+.hero-desc  { animation: fadeUp 0.5s 0.3s both; }
+.hero-actions { animation: fadeUp 0.5s 0.4s both; }
+.hero-stats { animation: fadeUp 0.5s 0.5s both; }
+.hero-panel { animation: fadeUp 0.6s 0.4s both; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div class="topbar-left">
+    <span>📍 Số 54 Đặng Vũ Hỷ, TP. Ninh Bình</span>
+    <span>🕐 Thứ 2 – Thứ 7: 8:00 – 18:00</span>
+  </div>
+  <div class="topbar-right">
+    <a href="tel:0886893357">📞 0886 893 357</a>
+    <a href="mailto:info@namhai.vn">✉ info@namhai.vn</a>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 20 20" fill="none">
+        <rect x="2" y="2" width="4" height="16" rx="1" fill="white" opacity="0.9"/>
+        <polygon points="6,2 10,2 16,18 12,18" fill="white" opacity="0.7"/>
+        <rect x="13" y="2" width="5" height="16" rx="1" fill="white" opacity="0.9"/>
+      </svg>
+    </div>
+    <div class="nav-logo-text">
+      <span class="brand">NAM HAI</span>
+      <span class="sub">TECHNOLOGY</span>
+    </div>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="#services">Dịch vụ</a>
+    <a href="#product">Sản phẩm</a>
+    <a href="#agri">Nông nghiệp số</a>
+    <a href="#projects">Dự án</a>
+    <a href="#about">Về chúng tôi</a>
+    <a href="#contact" class="nav-cta">Tư vấn miễn phí</a>
+  </div>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-label">IoT · Tự động hóa · Giám sát thông minh</div>
+      <h1 class="hero-h1">Giải pháp<br><em>vận hành thông minh</em><br>cho mọi lĩnh vực</h1>
+      <p class="hero-desc">Nam Hai Technology triển khai hệ thống IoT giám sát, cảnh báo và tự động hóa — giúp nhà hàng, kho bãi, xưởng sản xuất và cửa hàng vận hành an toàn, tiết kiệm chi phí, không bao giờ bị bất ngờ.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Nhận tư vấn miễn phí →</a>
+        <a href="#services" class="btn-ghost">Khám phá giải pháp</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hstat-num">50<span>+</span></div>
+          <div class="hstat-label">Khách hàng tin dùng</div>
+        </div>
+        <div>
+          <div class="hstat-num">200<span>+</span></div>
+          <div class="hstat-label">Thiết bị triển khai</div>
+        </div>
+        <div>
+          <div class="hstat-num">98<span>%</span></div>
+          <div class="hstat-label">Tỷ lệ hài lòng</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="hpanel-card">
+        <div class="hpanel-head">
+          <span class="hpanel-title">Hệ thống giám sát · Live</span>
+          <span class="dot-green"></span>
+        </div>
+        <div class="hpanel-grid">
+          <div class="hpanel-mini">
+            <div class="val">97.2<span>%</span></div>
+            <div class="lbl">UPTIME</div>
+          </div>
+          <div class="hpanel-mini">
+            <div class="val">4<span>/5</span></div>
+            <div class="lbl">MÁY CHẠY</div>
+          </div>
+          <div class="hpanel-mini">
+            <div class="val">12.4<span>A</span></div>
+            <div class="lbl">DÒNG ĐIỆN</div>
+          </div>
+          <div class="hpanel-mini">
+            <div class="val" style="color:#10B981;-webkit-text-fill-color:#10B981;">OK</div>
+            <div class="lbl">RUNG ĐỘNG</div>
+          </div>
+        </div>
+      </div>
+      <div class="hpanel-card">
+        <div class="hpanel-head">
+          <span class="hpanel-title">Cảnh báo · 14:32:07</span>
+          <span class="dot-red"></span>
+        </div>
+        <div class="hpanel-alert">
+          <div class="hpanel-alert-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          </div>
+          <div>
+            <div class="hpanel-alert-txt">Máy CNC #3 dừng bất thường</div>
+            <div class="hpanel-alert-sub">Telegram → Mr. Thái · 0886 893 357</div>
+          </div>
+        </div>
+      </div>
+      <div class="hpanel-card" style="background:rgba(6,182,212,0.06); border-color:rgba(6,182,212,0.2);">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;border-radius:8px;background:rgba(6,182,212,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#06B6D4" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.35);font-family:var(--font-m);letter-spacing:1px;margin-bottom:3px;">TRẠNG THÁI</div>
+            <div style="font-size:14px;font-weight:600;color:white;">Tất cả hệ thống hoạt động bình thường</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<div id="clients">
+  <div class="clients-inner">
+    <div class="clients-label">Đã phục vụ</div>
+    <div class="clients-logos">
+      <div class="client-pill">DatBike</div>
+      <div class="client-pill">KCN Bắc Ninh</div>
+      <div class="client-pill">KCN Đông Anh</div>
+      <div class="client-pill">F&B Ninh Bình</div>
+      <div class="client-pill">Kho lạnh Miền Bắc</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="text-center reveal" style="margin-bottom:0;">
+      <div class="sec-label">Giải pháp vận hành</div>
+      <h2 class="sec-h2"><span style="color:var(--blue);">Giám sát</span> · <span style="color:var(--blue);">Cảnh báo</span> · <span style="color:var(--blue);">Quản lý</span></h2>
+      <p class="sec-sub">Dù bạn quản lý nhà hàng, kho hàng hay xưởng sản xuất — Nam Hai giúp bạn nắm toàn bộ hoạt động trong lòng bàn tay.</p>
+    </div>
+    <div class="services-grid">
+      <div class="svc-card reveal d1">
+        <div class="svc-num">01</div>
+        <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3>F&B & Nhà hàng</h3>
+        <p>Giám sát nhiệt độ kho lạnh, tủ bảo quản 24/7. Cảnh báo tức thì qua điện thoại — không để hư hỏng thực phẩm vì phát hiện trễ.</p>
+        <div class="svc-tags">
+          <span class="stag">Kho lạnh</span>
+          <span class="stag">Alert Telegram</span>
+          <span class="stag">Cảm biến điện</span>
+        </div>
+        <div class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+      <div class="svc-card reveal d2">
+        <div class="svc-num">02</div>
+        <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <h3>Hộ kinh doanh & Cửa hàng</h3>
+        <p>Điều khiển thiết bị điện từ xa qua điện thoại. Tự động tắt khi đóng cửa, tiết kiệm điện năng và giảm rủi ro cháy nổ.</p>
+        <div class="svc-tags">
+          <span class="stag">Điều khiển từ xa</span>
+          <span class="stag">Tiết kiệm điện</span>
+          <span class="stag">PCCC</span>
+        </div>
+        <div class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+      <div class="svc-card reveal d3">
+        <div class="svc-num">03</div>
+        <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+        <h3>Kho bãi & Logistics</h3>
+        <p>Giám sát môi trường kho, kiểm soát ra vào thông minh, cảnh báo xâm nhập ngoài giờ. Bảo vệ hàng hóa giảm tổn thất không lường trước.</p>
+        <div class="svc-tags">
+          <span class="stag">Môi trường kho</span>
+          <span class="stag">Ra vào</span>
+          <span class="stag">An ninh 24/7</span>
+        </div>
+        <div class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+      <div class="svc-card reveal d1">
+        <div class="svc-num">04</div>
+        <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h3>Xưởng sản xuất & Nhà máy</h3>
+        <p>IoT H1 theo dõi máy CNC, phát cảnh báo ngay khi máy dừng bất thường — phản ứng trong 5 phút thay vì 45 phút như trước.</p>
+        <div class="svc-tags">
+          <span class="stag">Máy CNC</span>
+          <span class="stag">OEE & Uptime</span>
+          <span class="stag">PLC / VFD</span>
+        </div>
+        <div class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+      <div class="svc-card reveal d2">
+        <div class="svc-num">05</div>
+        <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <h3>Tiết kiệm năng lượng</h3>
+        <p>Phân tích tiêu thụ điện theo ca, theo thiết bị. Khách hàng trung bình tiết kiệm 15–20% chi phí điện sau 3 tháng triển khai.</p>
+        <div class="svc-tags">
+          <span class="stag">Đo điện năng</span>
+          <span class="stag">Báo cáo chi phí</span>
+          <span class="stag">ROI rõ ràng</span>
+        </div>
+        <div class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+      <div class="svc-card reveal d3">
+        <div class="svc-num">06</div>
+        <div class="svc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <h3>Hỗ trợ kỹ thuật trọn gói</h3>
+        <p>Từ khảo sát, lắp đặt đến bảo trì định kỳ. Hỗ trợ on-site tại miền Bắc trong vòng 4 giờ kể từ khi yêu cầu. Bảo hành 12 tháng.</p>
+        <div class="svc-tags">
+          <span class="stag">On-site</span>
+          <span class="stag">Remote 24/7</span>
+          <span class="stag">Bảo hành 12T</span>
+        </div>
+        <div class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="about-card">
+        <div class="about-metrics">
+          <div class="am-box">
+            <div class="am-num">2+</div>
+            <div class="am-label">Năm kinh nghiệm</div>
+          </div>
+          <div class="am-box">
+            <div class="am-num">50+</div>
+            <div class="am-label">Khách hàng</div>
+          </div>
+          <div class="am-box">
+            <div class="am-num">5+</div>
+            <div class="am-label">Khu công nghiệp</div>
+          </div>
+          <div class="am-box">
+            <div class="am-num">24/7</div>
+            <div class="am-label">Hỗ trợ kỹ thuật</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-badge">
+        <span class="icon">🏆</span>
+        <div>
+          <div class="t">Đối tác tin cậy</div>
+          <div class="s">Ô tô · Điện tử · Cơ khí</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-content reveal d2">
+      <div class="sec-label">Về chúng tôi</div>
+      <h2 class="sec-h2">Người đồng hành<br>của doanh nghiệp Việt</h2>
+      <p>Nam Hai Technology là công ty kỹ thuật chuyên về IoT, tự động hóa và thiết bị thông minh — phục vụ nhà máy, F&B, kho bãi, cửa hàng và nông nghiệp trên địa bàn miền Bắc.</p>
+      <p>Chúng tôi hiểu nỗi đau của người vận hành: máy dừng không rõ nguyên nhân, thiếu dữ liệu thời gian thực, chi phí sửa chữa leo thang. Đó là lý do Nam Hai ra đời.</p>
+      <div class="about-feats">
+        <div class="af-row">
+          <span class="fi">🎯</span>
+          <div>
+            <h4>Tiếp cận thực tế, không lý thuyết</h4>
+            <p>Kỹ thuật viên trực tiếp làm việc tại xưởng, hiểu quy trình từ bên trong.</p>
+          </div>
+        </div>
+        <div class="af-row">
+          <span class="fi">⚡</span>
+          <div>
+            <h4>Triển khai nhanh, không gián đoạn</h4>
+            <p>Lắp đặt 1–2 giờ, không dừng dây chuyền, chạy song song từ ngày đầu.</p>
+          </div>
+        </div>
+        <div class="af-row">
+          <span class="fi">💰</span>
+          <div>
+            <h4>Chi phí hợp lý — ROI rõ ràng</h4>
+            <p>Định giá theo quy mô, cam kết hoàn vốn dưới 6 tháng.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="product">
+  <div class="prod-header reveal">
+    <div class="sec-label">Danh mục sản phẩm</div>
+    <h2 class="sec-h2">Thiết bị thông minh<br>cho mọi không gian</h2>
+    <p class="sec-sub">Hai dòng sản phẩm phục vụ hai nhu cầu khác nhau — từ nhà ở, văn phòng đến nhà xưởng công nghiệp.</p>
+  </div>
+
+  <!-- Group A -->
+  <div class="prod-cat">
+    <div class="prod-cat-head">
+      <div class="prod-cat-bar"></div>
+      <div>
+        <div class="prod-cat-tag">Nhóm A</div>
+        <div class="prod-cat-title">Thiết bị IoT thông minh trong nhà</div>
+      </div>
+    </div>
+    <div class="prod-grid">
+      <div class="prod-card reveal d1">
+        <div class="prod-thumb light">
+          <div class="prod-thumb-grid light-grid"></div>
+          <div class="prod-thumb-content">
+            <div class="prod-thumb-tag">Tuya Smart</div>
+            <div class="prod-thumb-name">Ổ cắm thông minh</div>
+            <div class="prod-thumb-sub">Đo điện năng · Wi-Fi</div>
+          </div>
+        </div>
+        <div class="prod-body">
+          <p>Bật/tắt từ xa, lập lịch tự động, theo dõi tiêu thụ điện theo thời gian thực từ điện thoại.</p>
+          <a href="#contact" class="prod-cta">Hỏi báo giá →</a>
+        </div>
+      </div>
+      <div class="prod-card reveal d2">
+        <div class="prod-thumb light">
+          <div class="prod-thumb-grid light-grid"></div>
+          <div class="prod-thumb-content">
+            <div class="prod-thumb-tag">Tuya Smart</div>
+            <div class="prod-thumb-name">Công tắc thông minh</div>
+            <div class="prod-thumb-sub">Wi-Fi · Google Home</div>
+          </div>
+        </div>
+        <div class="prod-body">
+          <p>Lắp vào vị trí công tắc cũ, điều khiển đèn và quạt bằng app hoặc giọng nói.</p>
+          <a href="#contact" class="prod-cta">Hỏi báo giá →</a>
+        </div>
+      </div>
+      <div class="prod-card reveal d3">
+        <div class="prod-thumb light">
+          <div class="prod-thumb-grid light-grid"></div>
+          <div class="prod-thumb-content">
+            <div class="prod-thumb-tag">Tuya Smart</div>
+            <div class="prod-thumb-name">Cảm biến môi trường</div>
+            <div class="prod-thumb-sub">Nhiệt độ · Độ ẩm · Khí gas</div>
+          </div>
+        </div>
+        <div class="prod-body">
+          <p>Cảnh báo Telegram ngay khi phát hiện nhiệt độ bất thường hoặc rò rỉ khí độc hại.</p>
+          <a href="#contact" class="prod-cta">Hỏi báo giá →</a>
+        </div>
+      </div>
+      <div class="prod-placeholder reveal d1">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <div class="t1">Sản phẩm sắp ra mắt</div>
+        <div class="t2">Đang cập nhật...</div>
+      </div>
+      <div class="prod-placeholder reveal d2">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <div class="t1">Sản phẩm sắp ra mắt</div>
+        <div class="t2">Đang cập nhật...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Group B -->
+  <div class="prod-cat">
+    <div class="prod-cat-head">
+      <div class="prod-cat-bar" style="background:var(--grad3);"></div>
+      <div>
+        <div class="prod-cat-tag">Nhóm B</div>
+        <div class="prod-cat-title">Thiết bị an toàn & An ninh công nghiệp</div>
+      </div>
+    </div>
+    <div class="prod-grid">
+      <div class="prod-card reveal d1">
+        <div class="prod-thumb dark">
+          <div class="prod-thumb-grid dark-grid"></div>
+          <div class="prod-thumb-content">
+            <div class="prod-thumb-tag">An ninh</div>
+            <div class="prod-thumb-name">Cổng xếp tự động</div>
+            <div class="prod-thumb-sub">Remote · Thẻ từ · App</div>
+          </div>
+        </div>
+        <div class="prod-body">
+          <p>Kiểm soát ra vào tự động, ghi log phương tiện, lập lịch đóng mở theo ca làm việc.</p>
+          <a href="#contact" class="prod-cta">Hỏi báo giá →</a>
+        </div>
+      </div>
+      <div class="prod-card reveal d2">
+        <div class="prod-thumb dark">
+          <div class="prod-thumb-grid dark-grid"></div>
+          <div class="prod-thumb-content">
+            <div class="prod-thumb-tag">Nhân sự</div>
+            <div class="prod-thumb-name">Máy chấm công</div>
+            <div class="prod-thumb-sub">Vân tay · Khuôn mặt</div>
+          </div>
+        </div>
+        <div class="prod-body">
+          <p>Nhận diện vân tay & khuôn mặt, xuất báo cáo tự động, tích hợp phần mềm tính lương.</p>
+          <a href="#contact" class="prod-cta">Hỏi báo giá →</a>
+        </div>
+      </div>
+      <div class="prod-placeholder reveal d3">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <div class="t1">Sản phẩm sắp ra mắt</div>
+        <div class="t2">Đang cập nhật...</div>
+      </div>
+      <div class="prod-placeholder reveal d1">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <div class="t1">Sản phẩm sắp ra mắt</div>
+        <div class="t2">Đang cập nhật...</div>
+      </div>
+      <div class="prod-placeholder reveal d2">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <div class="t1">Sản phẩm sắp ra mắt</div>
+        <div class="t2">Đang cập nhật...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGRI -->
+<section id="agri">
+  <div class="agri-inner">
+    <div class="text-center reveal" style="margin-bottom:0;">
+      <div class="sec-label" style="justify-content:center;color:#10B981;">Nông nghiệp số</div>
+      <h2 class="sec-h2" style="color:white;">Chuyển đổi số cho<br>Nông nghiệp · Chăn nuôi · Thủy sản</h2>
+      <p class="sec-sub" style="color:rgba(255,255,255,0.5);margin:12px auto 0;">Nam Hai mang IoT thực tiễn đến trang trại, ao nuôi và chuồng trại — sản xuất nhiều hơn, tốn ít công hơn.</p>
+    </div>
+    <div class="agri-grid">
+      <div class="agri-card reveal d1">
+        <div class="agri-card-icon">🌿</div>
+        <h3>Giám sát môi trường trồng trọt</h3>
+        <p>Cảm biến nhiệt độ, độ ẩm đất, CO₂ trong nhà kính — cảnh báo ngay khi vượt ngưỡng, theo dõi từ xa qua điện thoại.</p>
+        <div class="agri-tags"><span class="atag">Nhiệt độ & Độ ẩm</span><span class="atag">Nhà kính</span></div>
+      </div>
+      <div class="agri-card reveal d2">
+        <div class="agri-card-icon">💧</div>
+        <h3>Tự động hóa tưới tiêu</h3>
+        <p>Tưới theo lịch hoặc cảm biến đất — đúng lúc, đúng lượng. Tiết kiệm đến 40% chi phí nước.</p>
+        <div class="agri-tags"><span class="atag">Tưới thông minh</span><span class="atag">Tiết kiệm 40% nước</span></div>
+      </div>
+      <div class="agri-card reveal d3">
+        <div class="agri-card-icon">🐄</div>
+        <h3>Chăn nuôi thông minh</h3>
+        <p>Giám sát chuồng trại 24/7, tự động thông gió khi vượt ngưỡng, máng ăn tự động theo lịch — giảm lãng phí và công chăm sóc.</p>
+        <div class="agri-tags"><span class="atag">Thông gió tự động</span><span class="atag">Máng ăn thông minh</span></div>
+      </div>
+      <div class="agri-card reveal d1">
+        <div class="agri-card-icon">🐟</div>
+        <h3>Nuôi trồng thủy sản</h3>
+        <p>Theo dõi oxy hòa tan, pH, nhiệt độ ao liên tục. Máy cho ăn tự động giảm hao phí thức ăn đến 30%.</p>
+        <div class="agri-tags"><span class="atag">pH & Oxy</span><span class="atag">Cho ăn tự động</span></div>
+      </div>
+    </div>
+    <div class="agri-cta-row reveal">
+      <a href="#contact" class="btn-green">Tư vấn giải pháp nông nghiệp →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="text-center reveal">
+      <div class="sec-label">Dự án tiêu biểu</div>
+      <h2 class="sec-h2">Kết quả thực tế<br>từ khách hàng</h2>
+      <p class="sec-sub">Những dự án đã triển khai tại các nhà máy và doanh nghiệp miền Bắc Việt Nam.</p>
+    </div>
+    <div class="proj-grid">
+      <div class="proj-card reveal d1">
+        <div class="proj-thumb" style="background:linear-gradient(135deg,#0A1628,#1A3A6B);">
+          <div class="proj-thumb-icon">🚗</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-cat">Ô tô · Hiệu chỉnh</div>
+          <h3>DatBike – Hiệu chỉnh đèn pha</h3>
+          <p>Hiệu chỉnh hệ thống đèn pha cho dây chuyền kiểm định xe máy điện, đạt chuẩn góc chiếu theo QCVN.</p>
+          <div class="proj-results">
+            <div class="presult">Hoàn thành 2 ngày</div>
+            <div class="presult">2 dòng xe · 4 trạm</div>
+            <div class="presult">Đạt chuẩn 100%</div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-card reveal d2">
+        <div class="proj-thumb" style="background:linear-gradient(135deg,#1e3a5f,#0ea5e9);">
+          <div class="proj-thumb-icon">🏭</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-cat">Cơ khí · IoT Monitoring</div>
+          <h3>Nhà máy cơ khí Bắc Ninh</h3>
+          <p>8 thiết bị H1 giám sát 8 máy CNC, Telegram alert cho quản đốc. Giảm thời gian phản ứng từ 45 phút xuống 5 phút.</p>
+          <div class="proj-results">
+            <div class="presult">8 máy giám sát</div>
+            <div class="presult">Giảm 89% thời gian phản ứng</div>
+            <div class="presult">Tiết kiệm 15h/tháng</div>
+          </div>
+        </div>
+      </div>
+      <div class="proj-card reveal d3">
+        <div class="proj-thumb" style="background:linear-gradient(135deg,#1a3a2a,#16a34a);">
+          <div class="proj-thumb-icon">⚡</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-cat">Điện tử · Tự động hóa</div>
+          <h3>Biến tần VFD – KCN Đông Anh</h3>
+          <p>Cấu hình 12 biến tần HOLIP cho dây chuyền lắp ráp, tối ưu băng tải theo ca sản xuất.</p>
+          <div class="proj-results">
+            <div class="presult">12 biến tần</div>
+            <div class="presult">Tiết kiệm 18% điện</div>
+            <div class="presult">ROI &lt; 3 tháng</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <div class="text-center reveal">
+      <div class="sec-label">Quy trình làm việc</div>
+      <h2 class="sec-h2">Từ liên hệ đến vận hành<br>chỉ trong 1 tuần</h2>
+    </div>
+    <div class="proc-steps">
+      <div class="pstep reveal d1">
+        <div class="pstep-num">01</div>
+        <h4>Khảo sát miễn phí</h4>
+        <p>Kỹ thuật viên đến tận nơi đánh giá hiện trạng và nhu cầu thực tế.</p>
+      </div>
+      <div class="pstep reveal d2">
+        <div class="pstep-num">02</div>
+        <h4>Báo giá rõ ràng</h4>
+        <p>Gửi báo giá chi tiết trong 24h, không phát sinh chi phí ẩn.</p>
+      </div>
+      <div class="pstep reveal d3">
+        <div class="pstep-num">03</div>
+        <h4>Triển khai tại chỗ</h4>
+        <p>Lắp đặt, cấu hình tại chỗ, không làm gián đoạn sản xuất.</p>
+      </div>
+      <div class="pstep reveal d4">
+        <div class="pstep-num">04</div>
+        <h4>Bàn giao & Đào tạo</h4>
+        <p>Hướng dẫn vận hành, hỗ trợ 30 ngày sau triển khai.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="cinfo reveal">
+      <div class="sec-label">Liên hệ</div>
+      <h2 class="sec-h2">Nhận tư vấn<br>miễn phí ngay</h2>
+      <p class="sec-sub">Điền form để đội kỹ thuật Nam Hai liên hệ trong 2 giờ làm việc — hoặc gọi thẳng cho Mr. Thái.</p>
+      <div class="cinfo-items">
+        <div class="cinfo-item">
+          <span class="cinfo-icon">📍</span>
+          <div>
+            <h4>Văn phòng</h4>
+            <p>Số 54 Đặng Vũ Hỷ, Phường Nam Bình, TP. Ninh Bình</p>
+          </div>
+        </div>
+        <div class="cinfo-item">
+          <span class="cinfo-icon">📞</span>
+          <div>
+            <h4>Điện thoại</h4>
+            <p>0886 893 357 (Mr. Thái)</p>
+          </div>
+        </div>
+        <div class="cinfo-item">
+          <span class="cinfo-icon">✉️</span>
+          <div>
+            <h4>Email</h4>
+            <p>info@namhai.vn</p>
+          </div>
+        </div>
+        <div class="cinfo-item">
+          <span class="cinfo-icon">🕐</span>
+          <div>
+            <h4>Giờ làm việc</h4>
+            <p>Thứ 2 – Thứ 7: 8:00 – 18:00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cform reveal d2">
+      <div class="cform-title">Gửi yêu cầu báo giá</div>
+      <div class="cform-sub">Chúng tôi sẽ liên hệ lại trong vòng 2 giờ làm việc</div>
+      <form id="contactForm">
+        <div class="cform-grid">
+          <div class="fg">
+            <label>Họ và tên *</label>
+            <input type="text" placeholder="Nguyễn Văn A" required>
+          </div>
+          <div class="fg">
+            <label>Số điện thoại *</label>
+            <input type="tel" placeholder="0912 345 678" required>
+          </div>
+          <div class="fg">
+            <label>Email</label>
+            <input type="email" placeholder="email@congty.vn">
+          </div>
+          <div class="fg">
+            <label>Tên công ty *</label>
+            <input type="text" placeholder="Công ty TNHH ABC" required>
+          </div>
+          <div class="fg full">
+            <label>Dịch vụ quan tâm *</label>
+            <select required>
+              <option value="">-- Chọn dịch vụ --</option>
+              <option>Giám sát IoT máy móc / thiết bị</option>
+              <option>Thiết bị thông minh Tuya (nhà / cửa hàng)</option>
+              <option>An ninh công nghiệp (cổng, chấm công)</option>
+              <option>Nông nghiệp số (tưới tiêu, chăn nuôi, thủy sản)</option>
+              <option>Tự động hóa / Lập trình PLC</option>
+              <option>Hiệu chỉnh thiết bị (đèn pha, cảm biến)</option>
+              <option>Tư vấn chuyển đổi số tổng thể</option>
+              <option>Khác</option>
+            </select>
+          </div>
+          <div class="fg full">
+            <label>Mô tả nhu cầu</label>
+            <textarea placeholder="Nhà máy tôi có 10 máy CNC, muốn giám sát và nhận cảnh báo khi máy dừng..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="cform-submit">Gửi yêu cầu báo giá →</button>
+        <p class="cform-note">🔒 Thông tin của bạn được bảo mật hoàn toàn</p>
+        <div class="cform-success" id="successMsg">✅ Cảm ơn! Chúng tôi sẽ liên hệ lại trong vòng 2 giờ làm việc.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="footer-logo-icon">
+          <svg viewBox="0 0 20 20" fill="none">
+            <rect x="2" y="2" width="4" height="16" rx="1" fill="white" opacity="0.9"/>
+            <polygon points="6,2 10,2 16,18 12,18" fill="white" opacity="0.7"/>
+            <rect x="13" y="2" width="5" height="16" rx="1" fill="white" opacity="0.9"/>
+          </svg>
+        </div>
+        <div>
+          <span class="brand">NAM HAI</span>
+          <span class="sub">TECHNOLOGY</span>
+        </div>
+      </div>
+      <p>Giải pháp IoT giám sát, cảnh báo và tự động hóa — cho nhà máy, F&B, kho bãi, cửa hàng và nông nghiệp Việt Nam.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Dịch vụ</h4>
+      <ul>
+        <li><a href="#services">Giám sát IoT</a></li>
+        <li><a href="#services">Tự động hóa</a></li>
+        <li><a href="#services">Hiệu chỉnh thiết bị</a></li>
+        <li><a href="#agri">Nông nghiệp số</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Công ty</h4>
+      <ul>
+        <li><a href="#about">Về chúng tôi</a></li>
+        <li><a href="#projects">Dự án tiêu biểu</a></li>
+        <li><a href="#process">Quy trình</a></li>
+        <li><a href="#contact">Liên hệ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Nam Hai Technology. Tất cả quyền được bảo lưu.</p>
+    <div class="footer-socials">
+      <a href="#">f</a>
+      <a href="#">Z</a>
+      <a href="#">in</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Navbar shadow on scroll
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => nav.classList.toggle('shadow', scrollY > 10));
+
+// Mobile menu
+document.getElementById('navToggle').addEventListener('click', () =>
+  document.getElementById('navLinks').classList.toggle('open'));
+document.querySelectorAll('.nav-links a').forEach(a =>
+  a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries =>
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Form submit
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const btn = this.querySelector('.cform-submit');
+  btn.textContent = 'Đang gửi...';
+  btn.disabled = true;
+  setTimeout(() => {
+    document.getElementById('successMsg').style.display = 'block';
+    btn.textContent = '✅ Đã gửi thành công!';
+    btn.style.background = '#10B981';
+  }, 1200);
+});
+</script>
+</body>
+</html>
